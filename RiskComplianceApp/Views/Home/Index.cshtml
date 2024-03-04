@@ -1,0 +1,133 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f8f8f8;
+    }
+
+    .small {
+        margin-top: 20px;
+        text-align: center;
+        color: #333;
+    }
+
+    h1 {
+        color: #007bff;
+        margin-bottom: 10px;
+    }
+
+    .lead {
+        font-size: 18px;
+        color: #666;
+        margin-bottom: 20px;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+
+    .row {
+        margin-top: 20px;
+    }
+
+    h2 {
+        color: #333;
+    }
+
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    li {
+        margin-bottom: 10px;
+    }
+
+    .btn-default {
+        background-color: #fff;
+        color: #333;
+        border-color: #ccc;
+    }
+
+    .col-md-4 {
+        margin-bottom: 20px;
+    }
+
+    .card {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 15px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+</style>
+
+<div class="small">
+    <h1>RCSA</h1>
+    <p class="lead">RCSA WEAPP FOR COMPLIANCE SUBMISSION.</p>
+    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="card">
+            <h2>Aberdeen</h2>
+            <ul>
+                <li>@Html.ActionLink("TRRAberdn", "TRRAberdenList", "Home")</li>
+                <li>@Html.ActionLink("KRIAberden", "KRIAberdenList", "Home")</li>
+                <li>@Html.ActionLink("NTRRAberden", "NTRRAberdenList", "Home")</li>
+                <li>@Html.ActionLink("IBCPAberden", "IBCPAberdenList", "Home")</li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <h2>Aegon</h2>
+            <ul>
+                <li>@Html.ActionLink("TRRAegon", "TRRAegonList", "Home")</li>
+                <li>@Html.ActionLink("KRIAegon", "KRIAegonList", "Home")</li>
+                <li>@Html.ActionLink("NTRRAegonList", "NTRRAegonList", "Home")</li>
+                <li>@Html.ActionLink("IBCPAegonList", "IBCPAegonList", "Home")</li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <h2>Amex</h2>
+            <ul>
+                <li>@Html.ActionLink("TRRAmex", "TRRAmexList", "Home")</li>
+                <li>@Html.ActionLink("KRIAmex", "KRIAmexList", "Home")</li>
+                <li>@Html.ActionLink("NTRRAmexList", "NTRRAmexList", "Home")</li>
+                <li>@Html.ActionLink("IBCPAmexList", "IBCPAmexList", "Home")</li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <h2>Multiplan</h2>
+            <ul>
+                <li>@Html.ActionLink("TRRMultiplan", "TRRMultiplanList", "Home")</li>
+                <li>@Html.ActionLink("KRIMultiplan", "KRIMultiplanList", "Home")</li>
+                <li>@Html.ActionLink("NTRRMultiplanList", "NTRRMultiplanList", "Home")</li>
+                <li>@Html.ActionLink("IBCPMultiplanList", "IBCPMultiplanList", "Home")</li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <h2>Novartis</h2>
+            <ul>
+                <li>@Html.ActionLink("TRRNovartis", "TRRNovartisList", "Home")</li>
+                <li>@Html.ActionLink("KRINovartis", "KRINovartisList", "Home")</li>
+
+                <li>@Html.ActionLink("NTRRNovartisList", "NTRRNovartisList", "Home")</li>
+                <li>@Html.ActionLink("IBCPNovartisList", "IBCPNovartisList", "Home")</li>
+            </ul>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,196 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="RiskAppModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'RiskApp.dbo.AdminTable' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="AdminTable">
+    <Key>
+      <PropertyRef Name="DAS_ID" />
+      <PropertyRef Name="NESSIE_ID" />
+      <PropertyRef Name="Name_Sortable" />
+    </Key>
+    <Property Name="DAS_ID" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="NESSIE_ID" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Name_Sortable" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="IBCP">
+    <Key>
+      <PropertyRef Name="Sr_No" />
+    </Key>
+    <Property Name="Sr_No" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Vertical" Type="nvarchar" MaxLength="50" />
+    <Property Name="Account" Type="nvarchar" MaxLength="50" />
+    <Property Name="Process" Type="nvarchar" MaxLength="50" />
+    <Property Name="Sub_Process" Type="nvarchar" MaxLength="100" />
+    <Property Name="Activity" Type="nvarchar" MaxLength="200" />
+    <Property Name="Head_Count" Type="nvarchar" MaxLength="50" />
+    <Property Name="Applications_software" Type="nvarchar" MaxLength="50" />
+    <Property Name="Volume" Type="nvarchar" MaxLength="50" />
+    <Property Name="Frequency_daily_weekly_monthly" Type="nvarchar" MaxLength="150" />
+    <Property Name="Any_Volume_trends" Type="nvarchar" MaxLength="50" />
+    <Property Name="SOP_Available" Type="nvarchar" MaxLength="50" />
+    <Property Name="No_of_SOP" Type="nvarchar" MaxLength="50" />
+    <Property Name="Activity_Description" Type="nvarchar" MaxLength="650" />
+    <Property Name="Supplier_who_is_sending" Type="nvarchar" MaxLength="50" />
+    <Property Name="Input_info_needs_to_be_processed" Type="nvarchar" MaxLength="350" />
+    <Property Name="Process_how_it_is_actually_done" Type="nvarchar" MaxLength="500" />
+    <Property Name="Output_what_is_the_output_storage" Type="nvarchar" MaxLength="250" />
+    <Property Name="Customer_end_client_Onshore_Or_biz" Type="nvarchar" MaxLength="100" />
+    <Property Name="SLA_Accuracy_Timelines" Type="nvarchar" MaxLength="50" />
+    <Property Name="SLA_Target" Type="nvarchar" MaxLength="50" />
+    <Property Name="No_Of_errors" Type="nvarchar" MaxLength="50" />
+    <Property Name="Type_of_Errors" Type="nvarchar" MaxLength="50" />
+    <Property Name="Risk_Description" Type="nvarchar" MaxLength="300" />
+    <Property Name="Type_of_Risk_Financial_Non_Financial_Regulatory" Type="nvarchar" MaxLength="50" />
+    <Property Name="Risk_Statement" Type="nvarchar" MaxLength="250" />
+    <Property Name="Likelihood" Type="nvarchar" MaxLength="50" />
+    <Property Name="Impact" Type="nvarchar" MaxLength="50" />
+    <Property Name="Risk_Score" Type="nvarchar" MaxLength="50" />
+    <Property Name="Control_Name" Type="nvarchar" MaxLength="100" />
+    <Property Name="Control_Description" Type="nvarchar" MaxLength="300" />
+    <Property Name="Control_Effectiveness" Type="nvarchar" MaxLength="50" />
+    <Property Name="Design_Effectiveness" Type="nvarchar" MaxLength="50" />
+    <Property Name="Control_Owner" Type="nvarchar" MaxLength="50" />
+    <Property Name="Type_of_control_Preventive_Manual_Detective_Automated_Process_People" Type="nvarchar" MaxLength="50" />
+    <Property Name="Residual_Risk_Considering_Control_Effectiveness" Type="nvarchar" MaxLength="50" />
+    <Property Name="Residual_Risk_Considering_Design_Effectiveness" Type="nvarchar" MaxLength="50" />
+    <Property Name="Test_steps_Methodology" Type="nvarchar" MaxLength="300" />
+    <Property Name="Testing_Objective" Type="nvarchar" MaxLength="150" />
+    <Property Name="What_to_Look_at" Type="nvarchar" MaxLength="450" />
+    <Property Name="What_to_Look_for" Type="nvarchar" MaxLength="450" />
+    <Property Name="What_to_report" Type="nvarchar" MaxLength="650" />
+    <Property Name="Status" Type="nvarchar" MaxLength="50" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="KRI">
+    <Key>
+      <PropertyRef Name="Sr_NO" />
+    </Key>
+    <Property Name="Sr_NO" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Vertical" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Account" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Process" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Sub_Process" Type="nvarchar" MaxLength="50" />
+    <Property Name="Activity" Type="nvarchar" MaxLength="550" />
+    <Property Name="Activity_Discription" Type="nvarchar" MaxLength="1150" Nullable="false" />
+    <Property Name="Risk_Statement" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="Likelyhood" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Impact" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Risk_Score" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Control_Name" Type="nvarchar" MaxLength="350" Nullable="false" />
+    <Property Name="Control_Description" Type="nvarchar" MaxLength="1600" />
+    <Property Name="Control_Effectiveness" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Design_Effectiveness" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Residual_Risk_Considering_Conrol_Effectiveness" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Residual_Risk_Considering_Design_Effectiveness" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="KRI" Type="nvarchar" MaxLength="100" />
+    <Property Name="Green" Type="nvarchar" MaxLength="50" />
+    <Property Name="Amber" Type="nvarchar" MaxLength="50" />
+    <Property Name="Red" Type="nvarchar" MaxLength="50" />
+    <Property Name="Status" Type="nvarchar" MaxLength="350" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="NTRR">
+    <Key>
+      <PropertyRef Name="Sr_No" />
+    </Key>
+    <Property Name="Sr_No" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Vertical" Type="nvarchar" MaxLength="50" />
+    <Property Name="Account" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Process" Type="nvarchar" MaxLength="100" />
+    <Property Name="Sub_Process" Type="nvarchar" MaxLength="50" />
+    <Property Name="Activity" Type="nvarchar" MaxLength="100" />
+    <Property Name="Applications_software" Type="nvarchar" MaxLength="50" />
+    <Property Name="Frequency_daily_weekly_monthly" Type="nvarchar" MaxLength="50" />
+    <Property Name="Activity_Description" Type="nvarchar" MaxLength="550" />
+    <Property Name="Supplier_who_is_sending" Type="nvarchar" MaxLength="50" />
+    <Property Name="Input_info_needs_to_be_processed" Type="nvarchar" MaxLength="100" />
+    <Property Name="Process_how_it_is_actually_done" Type="nvarchar" MaxLength="200" />
+    <Property Name="Output_what_is_the_output_storage" Type="nvarchar" MaxLength="100" />
+    <Property Name="Customer_End_Client_Client_Or_biz" Type="nvarchar" MaxLength="50" />
+    <Property Name="SLA_Accuracy_Timelines" Type="nvarchar" MaxLength="50" />
+    <Property Name="SLA_Target" Type="nvarchar" MaxLength="50" />
+    <Property Name="Risk_Description" Type="nvarchar" MaxLength="350" />
+    <Property Name="Type_of_Risk_Financial_Non_Financial_Regulatory" Type="nvarchar" MaxLength="50" />
+    <Property Name="Risk_Statement" Type="nvarchar" MaxLength="150" />
+    <Property Name="Likelyhood" Type="nvarchar" MaxLength="50" />
+    <Property Name="Impact" Type="nvarchar" MaxLength="50" />
+    <Property Name="Risk_Score" Type="nvarchar" MaxLength="50" />
+    <Property Name="Control_Name" Type="nvarchar" MaxLength="100" />
+    <Property Name="Control_Description" Type="nvarchar" MaxLength="500" />
+    <Property Name="Control_Effectiveness" Type="nvarchar" MaxLength="50" />
+    <Property Name="Design_Effectiveness" Type="nvarchar" MaxLength="50" />
+    <Property Name="Control_Owner" Type="nvarchar" MaxLength="50" />
+    <Property Name="Type_of_control_Preventive_Manual_Detective_Automated_Process_People" Type="nvarchar" MaxLength="50" />
+    <Property Name="Residual_Risk_Considering_Control_Effectiveness" Type="nvarchar" MaxLength="50" />
+    <Property Name="Residual_Risk_Considering_Design_Effectiveness" Type="nvarchar" MaxLength="50" />
+    <Property Name="Test_steps_Methodology" Type="nvarchar" MaxLength="150" />
+    <Property Name="Testing_Objective" Type="nvarchar" MaxLength="200" />
+    <Property Name="What_to_Look_at" Type="nvarchar" MaxLength="250" />
+    <Property Name="What_to_Look_for" Type="nvarchar" MaxLength="300" />
+    <Property Name="What_to_report" Type="nvarchar" MaxLength="150" />
+    <Property Name="Status" Type="nvarchar" MaxLength="150" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TRR">
+    <Key>
+      <PropertyRef Name="Sr_No" />
+    </Key>
+    <Property Name="Sr_No" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Vertical" Type="nvarchar" MaxLength="50" />
+    <Property Name="Account" Type="nvarchar" MaxLength="50" />
+    <Property Name="Process" Type="nvarchar" MaxLength="50" />
+    <Property Name="Sub_Process" Type="nvarchar" MaxLength="150" />
+    <Property Name="Activity" Type="nvarchar" MaxLength="250" />
+    <Property Name="Head_Count" Type="nvarchar" MaxLength="50" />
+    <Property Name="Applications" Type="nvarchar" MaxLength="100" />
+    <Property Name="Volume" Type="nvarchar" MaxLength="150" />
+    <Property Name="Frequency" Type="nvarchar" MaxLength="100" />
+    <Property Name="Any_Volume_trends" Type="nvarchar" MaxLength="50" />
+    <Property Name="SOP_Available" Type="nvarchar" MaxLength="100" />
+    <Property Name="No_of_SOP" Type="nvarchar" MaxLength="100" />
+    <Property Name="Activity_Description" Type="nvarchar" MaxLength="1700" />
+    <Property Name="Supplier" Type="nvarchar" MaxLength="100" />
+    <Property Name="Input" Type="nvarchar" MaxLength="400" />
+    <Property Name="Process2" Type="nvarchar" MaxLength="2650" />
+    <Property Name="Output" Type="nvarchar" MaxLength="400" />
+    <Property Name="Customer" Type="nvarchar" MaxLength="100" />
+    <Property Name="SLA" Type="nvarchar" MaxLength="50" />
+    <Property Name="SLA_Target" Type="nvarchar" MaxLength="100" />
+    <Property Name="No_Of_errors" Type="nvarchar" MaxLength="50" />
+    <Property Name="Type_of_Errors" Type="nvarchar" MaxLength="100" />
+    <Property Name="Risk_Description" Type="nvarchar" MaxLength="850" />
+    <Property Name="Type_of_Risk" Type="nvarchar" MaxLength="50" />
+    <Property Name="Risk_Statement" Type="nvarchar" MaxLength="250" />
+    <Property Name="Likelyhood" Type="nvarchar" MaxLength="50" />
+    <Property Name="Impact" Type="nvarchar" MaxLength="50" />
+    <Property Name="Risk_Score" Type="nvarchar" MaxLength="50" />
+    <Property Name="Control_Name" Type="nvarchar" MaxLength="350" />
+    <Property Name="Control_Description" Type="nvarchar" MaxLength="1600" />
+    <Property Name="Control_Effectiveness" Type="nvarchar" MaxLength="50" />
+    <Property Name="Design_Effectiveness" Type="nvarchar" MaxLength="50" />
+    <Property Name="Control_Owner" Type="nvarchar" MaxLength="50" />
+    <Property Name="Type_of_control" Type="nvarchar" MaxLength="50" />
+    <Property Name="Residual_Risk_Considering_Control_Effectiveness" Type="nvarchar" MaxLength="50" />
+    <Property Name="Residual_Risk_Considering_Design_Effectiveness" Type="nvarchar" MaxLength="50" />
+    <Property Name="Test_steps_Methodology" Type="nvarchar" MaxLength="1550" />
+    <Property Name="Testing_Objective" Type="nvarchar" MaxLength="700" />
+    <Property Name="What_to_Look_at" Type="nvarchar" MaxLength="350" />
+    <Property Name="What_to_Look_for" Type="nvarchar" MaxLength="900" />
+    <Property Name="What_to_report" Type="nvarchar" MaxLength="350" />
+    <Property Name="Status" Type="nvarchar" MaxLength="350" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityContainer Name="RiskAppModelStoreContainer">
+    <EntitySet Name="IBCP" EntityType="Self.IBCP" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="KRI" EntityType="Self.KRI" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="NTRR" EntityType="Self.NTRR" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TRR" EntityType="Self.TRR" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AdminTable" EntityType="Self.AdminTable" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [AdminTable].[DAS_ID] AS [DAS_ID], 
+    [AdminTable].[NESSIE_ID] AS [NESSIE_ID], 
+    [AdminTable].[Name_Sortable] AS [Name_Sortable]
+    FROM [dbo].[AdminTable] AS [AdminTable]</DefiningQuery>
+    </EntitySet>
+  </EntityContainer>
+</Schema>

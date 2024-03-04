@@ -1,0 +1,188 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="RiskAppModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="TRR">
+    <Key>
+      <PropertyRef Name="Sr_No" />
+    </Key>
+    <Property Name="Sr_No" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Vertical" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Account" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Process" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Sub_Process" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Activity" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Head_Count" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Applications" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Volume" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Frequency" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Any_Volume_trends" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SOP_Available" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="No_of_SOP" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Activity_Description" Type="String" MaxLength="1700" FixedLength="false" Unicode="true" />
+    <Property Name="Supplier" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Input" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+    <Property Name="Process2" Type="String" MaxLength="2650" FixedLength="false" Unicode="true" />
+    <Property Name="Output" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+    <Property Name="Customer" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="SLA" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SLA_Target" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="No_Of_errors" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Type_of_Errors" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Risk_Description" Type="String" MaxLength="850" FixedLength="false" Unicode="true" />
+    <Property Name="Type_of_Risk" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Risk_Statement" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Likelyhood" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Impact" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Risk_Score" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Control_Name" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
+    <Property Name="Control_Description" Type="String" MaxLength="1600" FixedLength="false" Unicode="true" />
+    <Property Name="Control_Effectiveness" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Design_Effectiveness" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Control_Owner" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Type_of_control" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Residual_Risk_Considering_Control_Effectiveness" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Residual_Risk_Considering_Design_Effectiveness" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Test_steps_Methodology" Type="String" MaxLength="1550" FixedLength="false" Unicode="true" />
+    <Property Name="Testing_Objective" Type="String" MaxLength="700" FixedLength="false" Unicode="true" />
+    <Property Name="What_to_Look_at" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
+    <Property Name="What_to_Look_for" Type="String" MaxLength="900" FixedLength="false" Unicode="true" />
+    <Property Name="What_to_report" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="Status" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityContainer Name="RiskAppEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="TRRs" EntityType="Self.TRR" />
+    <EntitySet Name="IBCPs" EntityType="RiskAppModel.IBCP" />
+    <EntitySet Name="KRIs" EntityType="RiskAppModel.KRI" />
+    <EntitySet Name="NTRRs" EntityType="RiskAppModel.NTRR" />
+    <EntitySet Name="AdminTables" EntityType="RiskAppModel.AdminTable" />
+  </EntityContainer>
+  <EntityType Name="IBCP">
+    <Key>
+      <PropertyRef Name="Sr_No" />
+    </Key>
+    <Property Name="Sr_No" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Vertical" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Account" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Process" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Sub_Process" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Activity" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Head_Count" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Applications_software" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Volume" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Frequency_daily_weekly_monthly" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Any_Volume_trends" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SOP_Available" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="No_of_SOP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Activity_Description" Type="String" MaxLength="650" FixedLength="false" Unicode="true" />
+    <Property Name="Supplier_who_is_sending" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Input_info_needs_to_be_processed" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
+    <Property Name="Process_how_it_is_actually_done" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="Output_what_is_the_output_storage" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Customer_end_client_Onshore_Or_biz" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="SLA_Accuracy_Timelines" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SLA_Target" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="No_Of_errors" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Type_of_Errors" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Risk_Description" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="Type_of_Risk_Financial_Non_Financial_Regulatory" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Risk_Statement" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Likelihood" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Impact" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Risk_Score" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Control_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Control_Description" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="Control_Effectiveness" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Design_Effectiveness" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Control_Owner" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Type_of_control_Preventive_Manual_Detective_Automated_Process_People" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Residual_Risk_Considering_Control_Effectiveness" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Residual_Risk_Considering_Design_Effectiveness" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Test_steps_Methodology" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="Testing_Objective" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="What_to_Look_at" Type="String" MaxLength="450" FixedLength="false" Unicode="true" />
+    <Property Name="What_to_Look_for" Type="String" MaxLength="450" FixedLength="false" Unicode="true" />
+    <Property Name="What_to_report" Type="String" MaxLength="650" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="KRI">
+    <Key>
+      <PropertyRef Name="Sr_NO" />
+    </Key>
+    <Property Name="Sr_NO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Vertical" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Account" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Process" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Sub_Process" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Activity" Type="String" MaxLength="550" FixedLength="false" Unicode="true" />
+    <Property Name="Activity_Discription" Type="String" Nullable="false" MaxLength="1150" FixedLength="false" Unicode="true" />
+    <Property Name="Risk_Statement" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Likelyhood" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Impact" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Risk_Score" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Control_Name" Type="String" Nullable="false" MaxLength="350" FixedLength="false" Unicode="true" />
+    <Property Name="Control_Description" Type="String" MaxLength="1600" FixedLength="false" Unicode="true" />
+    <Property Name="Control_Effectiveness" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Design_Effectiveness" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Residual_Risk_Considering_Conrol_Effectiveness" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Residual_Risk_Considering_Design_Effectiveness" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="KRI1" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Green" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Amber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Red" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="Status" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="NTRR">
+    <Key>
+      <PropertyRef Name="Sr_No" />
+    </Key>
+    <Property Name="Sr_No" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Vertical" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Account" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Process" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Sub_Process" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Activity" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Applications_software" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Frequency_daily_weekly_monthly" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Activity_Description" Type="String" MaxLength="550" FixedLength="false" Unicode="true" />
+    <Property Name="Supplier_who_is_sending" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Input_info_needs_to_be_processed" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Process_how_it_is_actually_done" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Output_what_is_the_output_storage" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Customer_End_Client_Client_Or_biz" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SLA_Accuracy_Timelines" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SLA_Target" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Risk_Description" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
+    <Property Name="Type_of_Risk_Financial_Non_Financial_Regulatory" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Risk_Statement" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Likelyhood" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Impact" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Risk_Score" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Control_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Control_Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="Control_Effectiveness" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Design_Effectiveness" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Control_Owner" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Type_of_control_Preventive_Manual_Detective_Automated_Process_People" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Residual_Risk_Considering_Control_Effectiveness" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Residual_Risk_Considering_Design_Effectiveness" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Test_steps_Methodology" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Testing_Objective" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="What_to_Look_at" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="What_to_Look_for" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="What_to_report" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="Status" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="AdminTable">
+    <Key>
+      <PropertyRef Name="DAS_ID" />
+      <PropertyRef Name="NESSIE_ID" />
+      <PropertyRef Name="Name_Sortable" />
+    </Key>
+    <Property Name="DAS_ID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="NESSIE_ID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Name_Sortable" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+</Schema>

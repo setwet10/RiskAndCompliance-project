@@ -1,0 +1,370 @@
+﻿@*﻿@model List<RiskComplianceApp.Models.TRR>
+    @{
+        ViewBag.Title = "TRRAmexList";
+    }
+
+    <style>
+        .truncate {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 200px; /* Adjust the max-width as needed */
+            cursor: pointer;
+        }
+
+        .full-content {
+            white-space: normal;
+            max-width: none;
+        }
+    </style>
+
+    <div class="container mt-4">
+        <h2>TRansaction Risk Register -Amex</h2>
+        <form action="@Url.Action("UploadFileTRR", "Home")" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" class="btn btn-secondary mb-2" />
+            <button type="submit" class="btn btn-primary mb-2">UploadTRR</button>
+        </form>
+        <form action="@Url.Action("DownloadTemplate", "Home")" method="post">
+            <input type="hidden" name="downloadTemplate" value="true" />
+            <button type="submit" class="btn btn-info mb-2">Download Template</button>
+        </form>
+        <div class="table-responsive">
+            <table class="table table-hover table-bordered">
+                <thead class="thead-dark">
+
+                    <tr>
+                        <th>Sr_No</th>
+                        <th>Vertical</th>
+                        <th>Account</th>
+                        <th>Process</th>
+                        <th>Sub_Process</th>
+                        <th>Activity</th>
+                        <th>Head_Count</th>
+                        <th>Applications_software</th>
+                        <th>Volume</th>
+                        <th>Frequency</th>
+                        <th>Any_Volume_trends</th>
+                        <th>SOP_Available</th>
+                        <th>No_of_SOP</th>
+                        <th>Activity_Description</th>
+                        <th>Supplier</th>
+                        <th>Input</th>
+                        <th>Process2</th>
+                        <th>Output</th>
+                        <th>Customer</th>
+                        <th>SLA</th>
+                        <th>SLA_Target</th>
+                        <th>No_Of_errors</th>
+                        <th>Type_of_Errors</th>
+                        <th>Risk_Description</th>
+                        <th>Type_of_Risk_Financial_Non_Financial_Regulatory</th>
+                        <th>Risk_Statement_I_have_added_this_column_as_required_for_RCSA</th>
+                        <th>Likelihood</th>
+                        <th>Impact</th>
+                        <th>Risk_Score</th>
+                        <th>Control_Name</th>
+                        <th>Control_Description</th>
+                        <th>Control_Effectiveness</th>
+                        <th>Control_Owner</th>
+                        <th>Type_of_control_Preventive_Manual_Detective_Automated_Process_People</th>
+                        <th>Residual_Risk_Considering_Control_Effectiveness</th>
+                        <th>Residual_Risk_Considering_Design_Effectiveness</th>
+                        <th>Test_steps_Methodology</th>
+                        <th>Testing_Objective</th>
+                        <th>What_to_Look_at</th>
+                        <th>What_to_Look_for</th>
+                        <th>What_to_report</th>
+                        <th>Control_Description</th>
+
+                    </tr>
+                </thead>
+                <tbody> @foreach (var item in Model) {<tr>
+        <td>@item.Sr_No</td>
+        <td>@item.Vertical</td>
+        <td>@item.Account</td>
+        <td>@item.Process</td>
+        <td>@item.Sub_Process</td>
+        <td>@item.Activity</td>
+        <td>@item.Head_Count</td>
+        <td>@item.Applications</td>
+        <td>@item.Volume</td>
+        <td>@item.Frequency</td>
+        <td>@item.Any_Volume_trends</td>
+        <td>@item.SOP_Available</td>
+        <td>@item.No_of_SOP</td>
+        <td>@item.Activity_Description</td>
+        <td>@item.Supplier</td>
+        <td>@item.Input</td>
+        <td>@item.Process2</td>
+        <td>@item.Output</td>
+        <td>@item.Customer</td>
+        <td>@item.SLA</td>
+        <td>@item.SLA_Target</td>
+        <td>@item.No_Of_errors</td>
+        <td>@item.Type_of_Errors</td>
+        <td>@item.Risk_Description</td>
+        <td>@item.Type_of_Risk</td>
+        <td>@item.Risk_Statement</td>
+        <td>@item.Likelyhood</td>
+        <td>@item.Impact</td>
+        <td>@item.Risk_Score</td>
+        <td>@item.Control_Name</td>
+        <td>@item.Control_Description</td>
+        <td>@item.Control_Effectiveness</td>
+        <td>@item.Design_Effectiveness</td>
+        <td>@item.Control_Owner</td>
+        <td>@item.Type_of_control</td>
+        <td>@item.Residual_Risk_Considering_Control_Effectiveness</td>
+        <td>@item.Residual_Risk_Considering_Design_Effectiveness</td>
+        <td>@item.Test_steps_Methodology</td>
+        <td>@item.Testing_Objective</td>
+        <td>@item.What_to_Look_at</td>
+        <td>@item.What_to_Look_for</td>
+        <td>@item.What_to_report</td>
+
+        <td>
+            <a href="@Url.Action("ISRRView",new {item.Sr_No,item.Vertical,item.Account,item.Process,item.Sub_Process,item.Activity,
+                            item.Head_Count,item.Applications,item.Volume,item.Frequency,item.Any_Volume_trends,item.SOP_Available,item.No_of_SOP,
+                            item.Activity_Description,item.Supplier,item.Input,item.Process2, item.Output,item.Customer,
+                            item.SLA,item.SLA_Target,item.No_Of_errors,item.Type_of_Errors,item.Risk_Description,item.Type_of_Risk,item.Risk_Statement,
+                            item.Likelyhood,item.Impact,item.Risk_Score,item.Control_Name,item.Control_Description,item.Control_Effectiveness,item.Design_Effectiveness,item.Control_Owner,item.Type_of_control,
+                               item.Residual_Risk_Considering_Control_Effectiveness,   item.Residual_Risk_Considering_Design_Effectiveness,   item.Test_steps_Methodology,   item.Testing_Objective,   item.What_to_Look_at,
+                                  item.What_to_Look_for,item.What_to_report,
+                        })" class="btn btn-success">Edit</a>
+
+            <a href="@Url.Action("Assign1", new { id = item.Sr_No })" class="btn btn-info">Assign</a>
+        </td>
+    </tr>
+                    }
+                 </tbody>
+            </table>
+        </div>
+    </div>*@
+
+@model List<RiskComplianceApp.Models.TRR>
+@{
+    ViewBag.Title = "TRRAmexList";
+}
+
+<style>
+    /* Add your custom styles here */
+    .container {
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 8px;
+        border: 1px solid #ddd;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    tr:hover {
+        background-color: #ddd;
+    }
+
+    .btn {
+        padding: 5px 10px;
+        text-decoration: none;
+        color: white;
+        border-radius: 3px;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+    .btn-secondary {
+        background-color: #6c757d;
+    }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+    .btn-success {
+        background-color: #28a745;
+    }
+
+        .btn-success:hover {
+            background-color: #218838;
+        }
+
+    .btn-info {
+        background-color: #17a2b8;
+    }
+
+        .btn-info:hover {
+            background-color: #138496;
+        }
+</style>
+
+<div class="container mt-4">
+    <h2>Transaction Risk Register - Amex</h2>
+    <form action="@Url.Action("UploadFileTRR", "Home")" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" class="btn btn-secondary mb-2" />
+        <button type="submit" class="btn btn-primary mb-2">Upload</button>
+    </form>
+    <form action="@Url.Action("DownloadTemplateTRR", "Home")" method="post">
+        <input type="hidden" name="downloadTemplate" value="true" />
+        <button type="submit" class="btn btn-info mb-2">Download Template</button>
+    </form>
+    <div class="table-responsive">
+        <table class="table table-hover table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Sr_No</th>
+                    <th>Vertical</th>
+                    <th>Account</th>
+                    <th>Process</th>
+                    <th>Sub_Process</th>
+                    <th>Activity</th>
+                    <th>Head_Count</th>
+                    <th>Applications_software</th>
+                    <th>Volume</th>
+                    <th>Frequency</th>
+                    <th>Any_Volume_trends</th>
+                    <th>SOP_Available</th>
+                    <th>No_of_SOP</th>
+                    <th>Activity_Description</th>
+                    <th>Supplier</th>
+                    <th>Input</th>
+                    <th>Process2</th>
+                    <th>Output</th>
+                    <th>Customer</th>
+                    <th>SLA</th>
+                    <th>SLA_Target</th>
+                    <th>No_Of_errors</th>
+                    <th>Type_of_Errors</th>
+                    <th>Risk_Description</th>
+                    <th>Type_of_Risk_Financial_Non_Financial_Regulatory</th>
+                    <th>Risk_Statement_I_have_added_this_column_as_required_for_RCSA</th>
+                    <th>Likelihood</th>
+                    <th>Impact</th>
+                    <th>Risk_Score</th>
+                    <th>Control_Name</th>
+                    <th>Control_Description</th>
+                    <th>Control_Effectiveness</th>
+                    <th>Control_Owner</th>
+                    <th>Type_of_control_Preventive_Manual_Detective_Automated_Process_People</th>
+                    <th>Residual_Risk_Considering_Control_Effectiveness</th>
+                    <th>Residual_Risk_Considering_Design_Effectiveness</th>
+                    <th>Test_steps_Methodology</th>
+                    <th>Testing_Objective</th>
+                    <th>What_to_Look_at</th>
+                    <th>What_to_Look_for</th>
+                    <th>What_to_report</th>
+                    <th>Status</th>
+
+                    <!-- Add more headers here -->
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Sr_No</td>
+                        <td>@item.Vertical</td>
+                        <td>@item.Account</td>
+                        <td>@item.Process</td>
+                        <td>@item.Sub_Process</td>
+                        <td>@item.Activity</td>
+                        <td>@item.Head_Count</td>
+                        <td>@item.Applications</td>
+                        <td>@item.Volume</td>
+                        <td>@item.Frequency</td>
+                        <td>@item.Any_Volume_trends</td>
+                        <td>@item.SOP_Available</td>
+                        <td>@item.No_of_SOP</td>
+                        <td>@item.Activity_Description</td>
+                        <td>@item.Supplier</td>
+                        <td>@item.Input</td>
+                        <td>@item.Process2</td>
+                        <td>@item.Output</td>
+                        <td>@item.Customer</td>
+                        <td>@item.SLA</td>
+                        <td>@item.SLA_Target</td>
+                        <td>@item.No_Of_errors</td>
+                        <td>@item.Type_of_Errors</td>
+                        <td>@item.Risk_Description</td>
+                        <td>@item.Type_of_Risk</td>
+                        <td>@item.Risk_Statement</td>
+                        <td>@item.Likelyhood</td>
+                        <td>@item.Impact</td>
+                        <td>@item.Risk_Score</td>
+                        <td>@item.Control_Name</td>
+                        <td>@item.Control_Description</td>
+                        <td>@item.Control_Effectiveness</td>
+                        <td>@item.Design_Effectiveness</td>
+                        <td>@item.Control_Owner</td>
+                        <td>@item.Type_of_control</td>
+                        <td>@item.Residual_Risk_Considering_Control_Effectiveness</td>
+                        <td>@item.Residual_Risk_Considering_Design_Effectiveness</td>
+                        <td>@item.Test_steps_Methodology</td>
+                        <td>@item.Testing_Objective</td>
+                        <td>@item.What_to_Look_at</td>
+                        <td>@item.What_to_Look_for</td>
+                        <td>@item.What_to_report</td>
+                        <td>
+                            @if (item.Status == "Approved")
+                            {
+                                <text>Approved</text>
+                            }
+                            else
+                            {
+                                <text>@(item.IsActive ? "Open" : "Audit")</text>
+                            }
+                        </td>
+                        <td>
+                            @if (item.IsActive)
+                            {
+                                <a href="@Url.Action("Assign1", new { id = item.Sr_No })" class="btn btn-info">Assign</a>
+                            }
+                            else
+                            {
+                                <button class="btn btn-info" disabled>Assign</button>
+
+                            }
+                        </td>
+                        <!-- Add more columns here -->
+                        <td>
+                            <a href="@Url.Action("ISRRView",new {item.Sr_No,item.Vertical,item.Account,item.Process,item.Sub_Process,item.Activity,
+                            item.Head_Count,item.Applications,item.Volume,item.Frequency,item.Any_Volume_trends,item.SOP_Available,item.No_of_SOP,
+                            item.Activity_Description,item.Supplier,item.Input,item.Process2, item.Output,item.Customer,
+                            item.SLA,item.SLA_Target,item.No_Of_errors,item.Type_of_Errors,item.Risk_Description,item.Type_of_Risk,item.Risk_Statement,
+                            item.Likelyhood,item.Impact,item.Risk_Score,item.Control_Name,item.Control_Description,item.Control_Effectiveness,item.Design_Effectiveness,item.Control_Owner,item.Type_of_control,
+                               item.Residual_Risk_Considering_Control_Effectiveness,   item.Residual_Risk_Considering_Design_Effectiveness,   item.Test_steps_Methodology,   item.Testing_Objective,   item.What_to_Look_at,
+                                  item.What_to_Look_for,item.What_to_report
+
+                                })" class="btn btn-success">Edit</a>
+
+                          
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

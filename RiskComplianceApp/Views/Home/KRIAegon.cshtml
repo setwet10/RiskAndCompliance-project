@@ -1,0 +1,111 @@
+﻿﻿@model RiskComplianceApp.Models.KRI
+@{
+    ViewBag.Title = "KRIAegon";
+}
+
+@using (Html.BeginForm("AddProject", "KRIAegon", FormMethod.Post))
+{
+    <div class="container">
+        <div class="form-group">
+            <label> Sr_NO</label>
+            @Html.TextBoxFor(x => x.Sr_NO, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            <label> Vertical</label>
+            @Html.TextBoxFor(x => x.Vertical, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            <label> Account</label>
+            @Html.TextBoxFor(x => x.Account, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            <label> Process</label>
+            @Html.TextBoxFor(x => x.Process, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            <label> Sub_Process</label>
+            @Html.TextBoxFor(x => x.Sub_Process, new { @class = "form-control" })
+            <div class="form-group">
+                <label> Activity</label>
+                @Html.TextAreaFor(x => x.Activity, new { @class = "form-control", @row = "10" })
+            </div>
+            <div class="form-group">
+                <label> Head_Count</label>
+                @Html.TextAreaFor(x => x.Activity_Description, new { @class = "form-control", @row = "10" })
+            </div>
+            <div class="form-group">
+                <label> Risk_Statement</label>
+                @Html.TextBoxFor(x => x.Risk_Statement, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label> Likelihood</label>
+                @Html.TextBoxFor(x => x.Likelyhood, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label> Impact</label>
+                @Html.TextBoxFor(x => x.Impact, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label> Risk_Score</label>
+                @Html.TextBoxFor(x => x.Risk_Score, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label> Control_Name</label>
+                @Html.TextBoxFor(x => x.Control_Name, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label> Control_Description</label>
+                @Html.TextBoxFor(x => x.Control_Description, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label> Control_Effectiveness</label>
+                @Html.TextBoxFor(x => x.Control_Effectiveness, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label> Design_Effectiveness</label>
+                @Html.TextBoxFor(x => x.Design_Effectiveness, new { @class = "form-control" })
+            </div>
+
+
+            <div class="form-group">
+                <label> Residual_Risk_Considering_Control_Effectiveness</label>
+                @Html.TextBoxFor(x => x.Residual_Risk_Considering_Conrol_Effectiveness, new { @class = "form-control" })
+
+            </div>
+            <div class="form-group">
+                <label> Residual_Risk_Considering_Design_Effectiveness</label>
+                @Html.TextBoxFor(x => x.Residual_Risk_Considering_Design_Effectiveness, new { @class = "form-control" })
+
+            </div>
+
+            <div class="form-group">
+                <label> KRI1</label>
+                @Html.TextBoxFor(x => x.KRI1, new { @class = "form-control" })
+
+            </div>
+            <div class="form-group">
+                <label> Green</label>
+                @Html.TextBoxFor(x => x.Green, new { @class = "form-control" })
+
+            </div>
+            <div class="form-group">
+                <label> Amber</label>
+                @Html.TextBoxFor(x => x.Amber, new { @class = "form-control" })
+
+            </div>
+            <div class="form-group">
+                <label> REd</label>
+                @Html.TextBoxFor(x => x.Red, new { @class = "form-control" })
+
+            </div>
+
+        </div>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+    </div>
+    </div>
+
+
+}

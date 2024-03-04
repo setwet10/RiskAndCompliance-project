@@ -1,0 +1,179 @@
+﻿﻿@model List<RiskComplianceApp.Models.IBCP>
+@{
+    ViewBag.Title = "IBCPMultiplan";
+}
+
+<style>
+    .truncate {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 200px; /* Adjust the max-width as needed */
+        cursor: pointer;
+    }
+
+    .full-content {
+        white-space: normal;
+        max-width: none;
+    }
+</style>
+
+<div class="container mt-4">
+    <h2> IBCP -IBCPMultiplan</h2>
+    <form action="@Url.Action("UploadFileIBCPAberden", "Home")" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" class="btn btn-secondary mb-2" />
+        <button type="submit" class="btn btn-primary mb-2">Upload</button>
+    </form>
+    <form action="@Url.Action("DownloadTemplateIBCP", "Home")" method="post">
+        <input type="hidden" name="downloadTemplate" value="true" />
+        <button type="submit" class="btn btn-info mb-2">Download Template</button>
+    </form>
+    <div class="table-responsive">
+        <table class="table table-hover table-bordered">
+            <thead class="thead-dark">
+
+                <tr>
+                    <th>Sr_No</th>
+                    <th>Vertical</th>
+                    <th>Account</th>
+                    <th>Process</th>
+                    <th>Sub_Process</th>
+                    <th>Activity</th>
+                    <th>Head_Count</th>
+                    <th>Applications_software</th>
+                    <th>Volume</th>
+                    <th>Frequency_daily_weekly_monthly</th>
+                    <th>Any_Volume_trends</th>
+                    <th>SOP_Available</th>
+                    <th>No_of_SOP</th>
+                    <th>Activity_Description</th>
+                    <th>Supplier_who_is_sending</th>
+                    <th>Input_info_needs_to_be_processed</th>
+                    <th>Process_how_it_is_actually_done</th>
+                    <th>Output_what_is_the_output_storage</th>
+                    <th>Customer_end_client_Onshore_Or_biz</th>
+                    <th>SLA_Accuracy_Timelines</th>
+                    <th>SLA_Target</th>
+                    <th>No_Of_errors</th>
+                    <th>Type_of_Errors</th>
+                    <th>Risk_Description</th>
+                    <th>Type_of_Risk_Financial_Non_Financial_Regulatory</th>
+                    <th>Risk_Statement</th>
+                    <th>Likelyhood</th>
+                    <th>Impact</th>
+                    <th>Risk_Score</th>
+                    <th>Control_Name</th>
+                    <th>Control_Description</th>
+                    <th>Control_Effectiveness</th>
+                    <th>DEsignl_Effectiveness</th>
+                    <th>Control_Owner</th>
+                    <th>Type_of_control_Preventive_Manual_Detective_Automated_Process_People</th>
+                    <th>Residual_Risk_Considering_Control_Effectiveness</th>
+                    <th>Residual_Risk_Considering_Design_Effectiveness</th>
+                    <th>Test_steps_Methodology</th>
+                    <th>Testing_Objective</th>
+                    <th>What_to_Look_at</th>
+                    <th>What_to_Look_for</th>
+                    <th>What_to_report</th>
+                    <th>Status</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Sr_No</td>
+                        <td>@item.Vertical</td>
+                        <td>@item.Account</td>
+                        <td>@item.Process</td>
+                        <td>@item.Sub_Process</td>
+                        <td>@item.Activity</td>
+                        <td>@item.Head_Count</td>
+                        <td>@item.Applications_software</td>
+                        <td>@item.Volume</td>
+                        <td>@item.Frequency_daily_weekly_monthly</td>
+                        <td>@item.Any_Volume_trends</td>
+                        <td>@item.SOP_Available</td>
+                        <td>@item.No_of_SOP</td>
+                        <td>@item.Activity_Description</td>
+                        <td>@item.Supplier_who_is_sending</td>
+                        <td>@item.Input_info_needs_to_be_processed</td>
+                        <td>@item.Process_how_it_is_actually_done</td>
+                        <td>@item.Output_what_is_the_output_storage</td>
+                        <td>@item.Customer_end_client_Onshore_Or_biz</td>
+                        <td>@item.SLA_Accuracy_Timelines</td>
+                        <td>@item.SLA_Target</td>
+                        <td>@item.No_Of_errors</td>
+                        <td>@item.Type_of_Errors</td>
+                        <td>@item.Risk_Description</td>
+                        <td>@item.Type_of_Risk_Financial_Non_Financial_Regulatory</td>
+                        <td>@item.Risk_Statement</td>
+                        <td>@item.Likelihood</td>
+                        <td>@item.Impact</td>
+                        <td>@item.Risk_Score</td>
+                        <td>@item.Control_Name</td>
+                        <td>@item.Control_Description</td>
+                        <td>@item.Control_Effectiveness</td>
+                        <td>@item.Design_Effectiveness</td>
+                        <td>@item.Control_Owner</td>
+                        <td>@item.Type_of_control_Preventive_Manual_Detective_Automated_Process_People</td>
+                        <td>@item.Residual_Risk_Considering_Control_Effectiveness</td>
+                        <td>@item.Residual_Risk_Considering_Design_Effectiveness</td>
+                        <td>@item.Test_steps_Methodology</td>
+                        <td>@item.Testing_Objective</td>
+                        <td>@item.What_to_Look_at</td>
+                        <td>@item.What_to_Look_for</td>
+                        <td>@item.What_to_report</td>
+                        @*<td>
+            @if (item.IsActive)
+            {
+                <text>Open</text>
+            }
+            else
+            {
+                <text>OnHold</text>
+            }
+        </td>*@
+                        <td>
+                            @if (item.Status == "Approved")
+                            {
+                                <text>Approved</text>
+                            }
+                            else
+                            {
+                                <text>@(item.IsActive ? "Open" : "Audit")</text>
+                            }
+                        </td>
+                        <td>
+                            @if (item.IsActive)
+                            {
+                                <a href="@Url.Action("Assign12", new { id = item.Sr_No })" class="btn btn-info">Assign</a>
+                            }
+                            else
+                            {
+                                <button class="btn btn-info" disabled>Assign</button>
+
+                            }
+                        </td>
+
+
+                        <td>
+                            <a href="@Url.Action("IBCPMultiplan",new {item.Sr_No,item.Vertical,item.Account,item.Process,item.Sub_Process,item.Activity,item.Volume,item.Head_Count,item.Applications_software,
+                      item.Frequency_daily_weekly_monthly,item.Any_Volume_trends,item.SOP_Available,item.No_of_SOP,
+                        item.Activity_Description,item.Supplier_who_is_sending,item.Input_info_needs_to_be_processed,item.Process_how_it_is_actually_done, item.Output_what_is_the_output_storage,item.Customer_end_client_Onshore_Or_biz,
+                        item.SLA_Accuracy_Timelines,item.SLA_Target,item.No_Of_errors,item.Type_of_Errors,item.Risk_Description,item.Type_of_Risk_Financial_Non_Financial_Regulatory,item.Risk_Statement,
+                        item.Likelihood,item.Impact,item.Risk_Score,item.Control_Name,item.Control_Description,item.Control_Effectiveness,item.Design_Effectiveness,item.Control_Owner,item.Type_of_control_Preventive_Manual_Detective_Automated_Process_People,
+                           item.Residual_Risk_Considering_Control_Effectiveness,item.Residual_Risk_Considering_Design_Effectiveness,item.Test_steps_Methodology,item.Testing_Objective,item.What_to_Look_at,
+                              item.What_to_Look_for,item.What_to_report
+
+                    })" class="btn btn-success">Edit</a>
+
+                            <a href="@Url.Action("Assign13", new { id = item.Sr_No })" class="btn btn-info">Assign</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

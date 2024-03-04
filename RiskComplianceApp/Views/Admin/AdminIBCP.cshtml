@@ -1,0 +1,121 @@
+﻿@model List<RiskComplianceApp.Models.IBCP>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin TRR</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #f2f2f2;
+        }
+
+        .container {
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Admin TRR</h1>
+        <table class="table">
+            <tr>
+                <th>Sr_No</th>
+                <th>Vertical</th>
+                <th>Account</th>
+                <th>Process</th>
+                <th>Sub_Process</th>
+                <th>Activity</th>
+                <th>Head_Count</th>
+                <th>Applications_software</th>
+                <th>Volume</th>
+                <th>Frequency_daily_weekly_monthly</th>
+                <th>Any_Volume_trends</th>
+                <th>SOP_Available</th>
+                <th>No_of_SOP</th>
+                <th>Activity_Description</th>
+                <th>Supplier_who_is_sending</th>
+                <th>Input_info_needs_to_be_processed</th>
+                <th>Process_how_it_is_actually_done</th>
+
+                <th>Customer_end_client_Onshore_Or_biz</th>
+                <th>SLA_Accuracy_Timelines</th>
+                <th>SLA_Target</th>
+                <th>No_of_SOP</th>
+                <th>No_of_SOP</th>
+                <th>No_of_SOP</th>
+                <th>No_of_SOP</th>
+                <th>No_of_SOP</th>
+                <th>No_of_SOP</th>
+                <th>No_of_SOP</th>
+                <th>No_of_SOP</th>
+                <th>No_of_SOP</th>
+                <th>No_of_SOP</th>
+                <th>Active</th>
+                <th>Action</th>
+            </tr>
+            @foreach (var activeRecord in Model)
+            {
+                <tr>
+                    <td>@activeRecord.Sr_No</td>
+                    <td>@activeRecord.Vertical</td>
+
+                    <td>@activeRecord.Account</td>
+                    <td>@activeRecord.Vertical</td>
+                    <td>@activeRecord.Vertical</td>
+                    <td>@activeRecord.Vertical</td>
+                    <td>@activeRecord.Vertical</td>
+                    <td>@activeRecord.Vertical</td>
+                    <td>@activeRecord.Vertical</td>
+                    <td>@activeRecord.Vertical</td>
+                    <td>@activeRecord.Vertical</td>
+                    <td>@activeRecord.Vertical</td>
+                    <td>@activeRecord.Vertical</td>
+                    <td>@activeRecord.Vertical</td>
+                    <td>@activeRecord.Vertical</td>
+                    <td>@activeRecord.Vertical</td>
+                    <td>@activeRecord.Vertical</td>
+                    <td>@activeRecord.Vertical</td>
+                    <td>@activeRecord.Vertical</td>
+                    <td>@activeRecord.Vertical</td>
+                    <td>@activeRecord.Vertical</td>
+                    <td>@activeRecord.Vertical</td>
+                    <td>@activeRecord.Vertical</td>
+                    <td>@activeRecord.Vertical</td>
+                    <td>@activeRecord.Vertical</td>
+
+                    
+                    <td>@(activeRecord.IsActive ? "Yes" : "No")</td>
+
+                    <td>
+                        <a href="@Url.Action("ApproveIBCP", "Admin", new { id = activeRecord.Sr_No })" class="btn btn-info">Approve</a>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</body>
+</html>

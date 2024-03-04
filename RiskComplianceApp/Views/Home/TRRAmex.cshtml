@@ -1,0 +1,193 @@
+﻿﻿@model RiskComplianceApp.Models.TRR
+@{
+    ViewBag.Title = "TRRAmex";
+}
+
+@using (Html.BeginForm("AddProject", "TRRAmex", FormMethod.Post))
+{
+    <div class="container">
+        <div class="form-group">
+            <label> Sr_No</label>
+            @Html.TextBoxFor(x => x.Sr_No, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            <label> Vertical</label>
+            @Html.TextBoxFor(x => x.Vertical, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            <label> Account</label>
+            @Html.TextBoxFor(x => x.Account, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            <label> Process</label>
+            @Html.TextBoxFor(x => x.Process, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            <label> Sub_Process</label>
+            @Html.TextBoxFor(x => x.Sub_Process, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            <label> Activity</label>
+            @Html.TextBoxFor(x => x.Activity, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            <label> Head_Count</label>
+            @Html.TextBoxFor(x => x.Head_Count, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            <label> Applications</label>
+            @Html.TextAreaFor(x => x.Applications, new { @class = "form-control", @row = "10" })
+        <div class="form-group">
+            <label> Volume</label>
+            @Html.TextBoxFor(x => x.Volume, new { @class = "form-control" })
+            <div class="form-group">
+                <label> Frequency</label>
+                @Html.TextBoxFor(x => x.Frequency, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label> Any_Volume_trends</label>
+                @Html.TextBoxFor(x => x.Any_Volume_trends, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label> SOP_Available</label>
+                @Html.TextBoxFor(x => x.SOP_Available, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label> No_of_SOP</label>
+                @Html.TextBoxFor(x => x.No_of_SOP, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label> Activity_Description</label>
+                @Html.TextBoxFor(x => x.Activity_Description, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label> Supplier</label>
+                @Html.TextBoxFor(x => x.Supplier, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label> Input</label>
+                @Html.TextBoxFor(x => x.Input, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label> Process2</label>
+                @Html.TextBoxFor(x => x.Process2, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label> Output</label>
+                @Html.TextBoxFor(x => x.Output, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label> Customer</label>
+                @Html.TextBoxFor(x => x.Customer, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label> SLA</label>
+                @Html.TextBoxFor(x => x.SLA, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label> SLA_Target</label>
+                @Html.TextBoxFor(x => x.SLA_Target, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label> No_Of_errors</label>
+                @Html.TextBoxFor(x => x.No_Of_errors, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label> Type_of_Errors</label>
+                @Html.TextBoxFor(x => x.Type_of_Errors, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label> Risk_Description</label>
+                @Html.TextBoxFor(x => x.Risk_Description, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label> Type_of_Risk</label>
+                @Html.TextBoxFor(x => x.Type_of_Risk, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label> Risk_Statement</label>
+                @Html.TextBoxFor(x => x.Risk_Statement, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label> Likelyhood</label>
+                @Html.TextBoxFor(x => x.Likelyhood, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label> Impact</label>
+                @Html.TextBoxFor(x => x.Impact, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label> Risk_Score</label>
+                @Html.TextBoxFor(x => x.Risk_Score, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label> Control_Name</label>
+                @Html.TextBoxFor(x => x.Control_Name, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label> Control_Description</label>
+                @Html.TextBoxFor(x => x.Control_Description, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label> Control_Effectiveness</label>
+                @Html.TextBoxFor(x => x.Control_Effectiveness, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label> Design_Effectiveness</label>
+                @Html.TextBoxFor(x => x.Design_Effectiveness, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label> Control_Owner</label>
+                @Html.TextBoxFor(x => x.Control_Owner, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label> Type_of_control</label>
+                @Html.TextBoxFor(x => x.Type_of_control, new { @class = "form-control" })
+
+            </div>
+            <div class="form-group">
+                <label> Residual_Risk_Considering_Control_Effectiveness</label>
+                @Html.TextBoxFor(x => x.Residual_Risk_Considering_Control_Effectiveness, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label> Residual_Risk_Considering_Design_Effectiveness</label>
+                @Html.TextBoxFor(x => x.Residual_Risk_Considering_Design_Effectiveness, new { @class = "form-control" })
+            </div>
+
+
+
+            <div class="form-group">
+                <label> Test_steps_Methodology</label>
+                @Html.TextBoxFor(x => x.Test_steps_Methodology, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label> Testing_Objective</label>
+                @Html.TextBoxFor(x => x.Testing_Objective, new { @class = "form-control" })
+            </div>
+
+            <div class="form-group">
+                <label> What_to_Look_at</label>
+                @Html.TextBoxFor(x => x.What_to_Look_at, new { @class = "form-control" })
+            </div>
+
+            <div class="form-group">
+                <label> What_to_Look_for</label>
+                @Html.TextBoxFor(x => x.What_to_Look_for, new { @class = "form-control" })
+            </div>
+
+            <div class="form-group">
+                <label> What_to_report</label>
+                @Html.TextBoxFor(x => x.What_to_report, new { @class = "form-control" })
+            </div>
+
+
+        </div>
+
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </div>
+
+}
+

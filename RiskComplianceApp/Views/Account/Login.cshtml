@@ -1,0 +1,273 @@
+﻿@*@model RiskComplianceApp.Models.AdminTable
+
+    @{
+
+        ViewBag.Title = "Login";
+
+        Layout = null;
+
+    }
+
+    <!doctype html>
+
+    <html lang="en">
+
+    <head>
+
+        <title></title>-
+
+        <meta charset="utf-8">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+        <link rel="stylesheet" href="~/Content/Login/style.css">
+
+        <style>
+
+            .bg {
+                background-image: url('../../Content/BackgroundImage.png');
+                height: 100%;
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+            }
+        </style>
+
+    </head>
+
+    <body class="bg">
+
+        <section class="ftco-section">
+
+            <div class="container">
+
+                <div class="row justify-content-left">
+
+                    <div class="col-md-6 col-lg-5">
+
+                        <div class="login-wrap p-4 p-md-5">
+
+                            <div class="icon d-flex align-items-center justify-content-center">
+
+                                <span class="fa fa-user-o"></span>
+
+                            </div>
+
+                            <h3 class="text-center mb-4">Login</h3>
+
+                            @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
+
+                            {
+
+                                <form action="#" class="login-form">
+
+                                    <div class="form-group">
+
+                                        @Html.AntiForgeryToken()
+
+                                        @Html.TextBoxFor(x => x.DAS_ID, null, new { @class = "form-control rounded-left", @placeholder = "Das ID" })
+
+                                        @Html.ValidationMessageFor(x => x.DAS_ID, "", new { @class = "text-danger" })
+
+                                    </div>
+
+                                    <div class="form-group d-md-flex">
+
+                                        <div class="w-50">
+
+                                            <label class="checkbox-wrap checkbox-primary">
+
+                                                Remember Me
+
+                                                <input type="checkbox">
+
+                                                <span class="checkmark"></span>
+
+                                            </label>
+
+                                        </div>
+
+                                        <div class="w-50 text-md-right">
+
+                                            <a href="#">Forgot Password</a>
+
+                                        </div>
+
+                                    </div>
+
+                                    @if (@TempData != null)
+
+                                    {
+
+                                        var val = @TempData["WrongPasss"];
+
+                                        <p style="color:orangered">@val</p>
+
+                                    }
+
+                                    <div class="form-group">
+
+                                        <button type="submit" class="btn btn-primary rounded submit p-3 px-5">Get Started</button>
+
+                                    </div>
+
+                                </form>
+
+                            }
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <script src="~/Content/jquery.min.js"></script>
+
+        <script src="~/Content/popper.js"></script>
+
+        <script src="~/Content/bootstrap.min.js"></script>
+
+        <script src="~/Content/main.js"></script>
+
+    </body>
+
+    </html>*@
+
+@model RiskComplianceApp.Models.AdminTable
+
+@{
+    ViewBag.Title = "Login";
+    Layout = null;
+}
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Login</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/Content/Login/style.css">
+    <style>
+        body {
+            font-family: 'Lato', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('../../Content/background.jpg ');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-wrap {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+            .login-wrap h3 {
+                margin-bottom: 20px;
+                text-align: center;
+                color: #333;
+            }
+
+        .form-control {
+            border-radius: 5px;
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+
+        .checkbox-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 14px;
+            color: #555;
+        }
+
+            .checkbox-wrap input[type="checkbox"] {
+                margin-right: 5px;
+            }
+
+        .forgot-password {
+            text-align: right;
+            font-size: 14px;
+            color: #777;
+        }
+
+        .submit {
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-weight: bold;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+            .submit:hover {
+                background-color: #0056b3;
+            }
+
+        .text-danger {
+            font-weight: bold;
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-wrap">
+        <h3>Login</h3>
+        @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <div class="form-group">
+                @Html.AntiForgeryToken()
+                @Html.TextBoxFor(x => x.DAS_ID, null, new { @class = "form-control", @placeholder = "Das ID" })
+                @Html.ValidationMessageFor(x => x.DAS_ID, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label class="checkbox-wrap">
+                    <input type="checkbox">
+                    Remember Me
+                </label>
+                <span class="forgot-password"><a href="#">Forgot Password</a></span>
+            </div>
+            if (@TempData != null)
+            {
+                var val = @TempData["WrongPasss"];
+                <p style="color:orangered">@val</p>
+            }
+            <div class="form-group">
+                <button type="submit" class="submit">Get Started</button>
+            </div>
+        }
+    </div>
+
+</body>
+
+</html>
+
+

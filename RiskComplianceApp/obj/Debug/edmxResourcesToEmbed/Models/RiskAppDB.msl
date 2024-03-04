@@ -1,0 +1,186 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="RiskAppModelStoreContainer" CdmEntityContainer="RiskAppEntities">
+    <EntitySetMapping Name="TRRs">
+      <EntityTypeMapping TypeName="RiskAppModel.TRR">
+        <MappingFragment StoreEntitySet="TRR">
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Sr_No" ColumnName="Sr_No" />
+          <ScalarProperty Name="Vertical" ColumnName="Vertical" />
+          <ScalarProperty Name="Account" ColumnName="Account" />
+          <ScalarProperty Name="Process" ColumnName="Process" />
+          <ScalarProperty Name="Sub_Process" ColumnName="Sub_Process" />
+          <ScalarProperty Name="Activity" ColumnName="Activity" />
+          <ScalarProperty Name="Head_Count" ColumnName="Head_Count" />
+          <ScalarProperty Name="Applications" ColumnName="Applications" />
+          <ScalarProperty Name="Volume" ColumnName="Volume" />
+          <ScalarProperty Name="Frequency" ColumnName="Frequency" />
+          <ScalarProperty Name="Any_Volume_trends" ColumnName="Any_Volume_trends" />
+          <ScalarProperty Name="SOP_Available" ColumnName="SOP_Available" />
+          <ScalarProperty Name="No_of_SOP" ColumnName="No_of_SOP" />
+          <ScalarProperty Name="Activity_Description" ColumnName="Activity_Description" />
+          <ScalarProperty Name="Supplier" ColumnName="Supplier" />
+          <ScalarProperty Name="Input" ColumnName="Input" />
+          <ScalarProperty Name="Process2" ColumnName="Process2" />
+          <ScalarProperty Name="Output" ColumnName="Output" />
+          <ScalarProperty Name="Customer" ColumnName="Customer" />
+          <ScalarProperty Name="SLA" ColumnName="SLA" />
+          <ScalarProperty Name="SLA_Target" ColumnName="SLA_Target" />
+          <ScalarProperty Name="No_Of_errors" ColumnName="No_Of_errors" />
+          <ScalarProperty Name="Type_of_Errors" ColumnName="Type_of_Errors" />
+          <ScalarProperty Name="Risk_Description" ColumnName="Risk_Description" />
+          <ScalarProperty Name="Type_of_Risk" ColumnName="Type_of_Risk" />
+          <ScalarProperty Name="Risk_Statement" ColumnName="Risk_Statement" />
+          <ScalarProperty Name="Likelyhood" ColumnName="Likelyhood" />
+          <ScalarProperty Name="Impact" ColumnName="Impact" />
+          <ScalarProperty Name="Risk_Score" ColumnName="Risk_Score" />
+          <ScalarProperty Name="Control_Name" ColumnName="Control_Name" />
+          <ScalarProperty Name="Control_Description" ColumnName="Control_Description" />
+          <ScalarProperty Name="Control_Effectiveness" ColumnName="Control_Effectiveness" />
+          <ScalarProperty Name="Design_Effectiveness" ColumnName="Design_Effectiveness" />
+          <ScalarProperty Name="Control_Owner" ColumnName="Control_Owner" />
+          <ScalarProperty Name="Type_of_control" ColumnName="Type_of_control" />
+          <ScalarProperty Name="Residual_Risk_Considering_Control_Effectiveness" ColumnName="Residual_Risk_Considering_Control_Effectiveness" />
+          <ScalarProperty Name="Residual_Risk_Considering_Design_Effectiveness" ColumnName="Residual_Risk_Considering_Design_Effectiveness" />
+          <ScalarProperty Name="Test_steps_Methodology" ColumnName="Test_steps_Methodology" />
+          <ScalarProperty Name="Testing_Objective" ColumnName="Testing_Objective" />
+          <ScalarProperty Name="What_to_Look_at" ColumnName="What_to_Look_at" />
+          <ScalarProperty Name="What_to_Look_for" ColumnName="What_to_Look_for" />
+          <ScalarProperty Name="What_to_report" ColumnName="What_to_report" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="IBCPs">
+      <EntityTypeMapping TypeName="RiskAppModel.IBCP">
+        <MappingFragment StoreEntitySet="IBCP">
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="What_to_report" ColumnName="What_to_report" />
+          <ScalarProperty Name="What_to_Look_for" ColumnName="What_to_Look_for" />
+          <ScalarProperty Name="What_to_Look_at" ColumnName="What_to_Look_at" />
+          <ScalarProperty Name="Testing_Objective" ColumnName="Testing_Objective" />
+          <ScalarProperty Name="Test_steps_Methodology" ColumnName="Test_steps_Methodology" />
+          <ScalarProperty Name="Residual_Risk_Considering_Design_Effectiveness" ColumnName="Residual_Risk_Considering_Design_Effectiveness" />
+          <ScalarProperty Name="Residual_Risk_Considering_Control_Effectiveness" ColumnName="Residual_Risk_Considering_Control_Effectiveness" />
+          <ScalarProperty Name="Type_of_control_Preventive_Manual_Detective_Automated_Process_People" ColumnName="Type_of_control_Preventive_Manual_Detective_Automated_Process_People" />
+          <ScalarProperty Name="Control_Owner" ColumnName="Control_Owner" />
+          <ScalarProperty Name="Design_Effectiveness" ColumnName="Design_Effectiveness" />
+          <ScalarProperty Name="Control_Effectiveness" ColumnName="Control_Effectiveness" />
+          <ScalarProperty Name="Control_Description" ColumnName="Control_Description" />
+          <ScalarProperty Name="Control_Name" ColumnName="Control_Name" />
+          <ScalarProperty Name="Risk_Score" ColumnName="Risk_Score" />
+          <ScalarProperty Name="Impact" ColumnName="Impact" />
+          <ScalarProperty Name="Likelihood" ColumnName="Likelihood" />
+          <ScalarProperty Name="Risk_Statement" ColumnName="Risk_Statement" />
+          <ScalarProperty Name="Type_of_Risk_Financial_Non_Financial_Regulatory" ColumnName="Type_of_Risk_Financial_Non_Financial_Regulatory" />
+          <ScalarProperty Name="Risk_Description" ColumnName="Risk_Description" />
+          <ScalarProperty Name="Type_of_Errors" ColumnName="Type_of_Errors" />
+          <ScalarProperty Name="No_Of_errors" ColumnName="No_Of_errors" />
+          <ScalarProperty Name="SLA_Target" ColumnName="SLA_Target" />
+          <ScalarProperty Name="SLA_Accuracy_Timelines" ColumnName="SLA_Accuracy_Timelines" />
+          <ScalarProperty Name="Customer_end_client_Onshore_Or_biz" ColumnName="Customer_end_client_Onshore_Or_biz" />
+          <ScalarProperty Name="Output_what_is_the_output_storage" ColumnName="Output_what_is_the_output_storage" />
+          <ScalarProperty Name="Process_how_it_is_actually_done" ColumnName="Process_how_it_is_actually_done" />
+          <ScalarProperty Name="Input_info_needs_to_be_processed" ColumnName="Input_info_needs_to_be_processed" />
+          <ScalarProperty Name="Supplier_who_is_sending" ColumnName="Supplier_who_is_sending" />
+          <ScalarProperty Name="Activity_Description" ColumnName="Activity_Description" />
+          <ScalarProperty Name="No_of_SOP" ColumnName="No_of_SOP" />
+          <ScalarProperty Name="SOP_Available" ColumnName="SOP_Available" />
+          <ScalarProperty Name="Any_Volume_trends" ColumnName="Any_Volume_trends" />
+          <ScalarProperty Name="Frequency_daily_weekly_monthly" ColumnName="Frequency_daily_weekly_monthly" />
+          <ScalarProperty Name="Volume" ColumnName="Volume" />
+          <ScalarProperty Name="Applications_software" ColumnName="Applications_software" />
+          <ScalarProperty Name="Head_Count" ColumnName="Head_Count" />
+          <ScalarProperty Name="Activity" ColumnName="Activity" />
+          <ScalarProperty Name="Sub_Process" ColumnName="Sub_Process" />
+          <ScalarProperty Name="Process" ColumnName="Process" />
+          <ScalarProperty Name="Account" ColumnName="Account" />
+          <ScalarProperty Name="Vertical" ColumnName="Vertical" />
+          <ScalarProperty Name="Sr_No" ColumnName="Sr_No" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="KRIs">
+      <EntityTypeMapping TypeName="RiskAppModel.KRI">
+        <MappingFragment StoreEntitySet="KRI">
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Red" ColumnName="Red" />
+          <ScalarProperty Name="Amber" ColumnName="Amber" />
+          <ScalarProperty Name="Green" ColumnName="Green" />
+          <ScalarProperty Name="KRI1" ColumnName="KRI" />
+          <ScalarProperty Name="Residual_Risk_Considering_Design_Effectiveness" ColumnName="Residual_Risk_Considering_Design_Effectiveness" />
+          <ScalarProperty Name="Residual_Risk_Considering_Conrol_Effectiveness" ColumnName="Residual_Risk_Considering_Conrol_Effectiveness" />
+          <ScalarProperty Name="Design_Effectiveness" ColumnName="Design_Effectiveness" />
+          <ScalarProperty Name="Control_Effectiveness" ColumnName="Control_Effectiveness" />
+          <ScalarProperty Name="Control_Description" ColumnName="Control_Description" />
+          <ScalarProperty Name="Control_Name" ColumnName="Control_Name" />
+          <ScalarProperty Name="Risk_Score" ColumnName="Risk_Score" />
+          <ScalarProperty Name="Impact" ColumnName="Impact" />
+          <ScalarProperty Name="Likelyhood" ColumnName="Likelyhood" />
+          <ScalarProperty Name="Risk_Statement" ColumnName="Risk_Statement" />
+          <ScalarProperty Name="Activity_Discription" ColumnName="Activity_Discription" />
+          <ScalarProperty Name="Activity" ColumnName="Activity" />
+          <ScalarProperty Name="Sub_Process" ColumnName="Sub_Process" />
+          <ScalarProperty Name="Process" ColumnName="Process" />
+          <ScalarProperty Name="Account" ColumnName="Account" />
+          <ScalarProperty Name="Vertical" ColumnName="Vertical" />
+          <ScalarProperty Name="Sr_NO" ColumnName="Sr_NO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="NTRRs">
+      <EntityTypeMapping TypeName="RiskAppModel.NTRR">
+        <MappingFragment StoreEntitySet="NTRR">
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="What_to_report" ColumnName="What_to_report" />
+          <ScalarProperty Name="What_to_Look_for" ColumnName="What_to_Look_for" />
+          <ScalarProperty Name="What_to_Look_at" ColumnName="What_to_Look_at" />
+          <ScalarProperty Name="Testing_Objective" ColumnName="Testing_Objective" />
+          <ScalarProperty Name="Test_steps_Methodology" ColumnName="Test_steps_Methodology" />
+          <ScalarProperty Name="Residual_Risk_Considering_Design_Effectiveness" ColumnName="Residual_Risk_Considering_Design_Effectiveness" />
+          <ScalarProperty Name="Residual_Risk_Considering_Control_Effectiveness" ColumnName="Residual_Risk_Considering_Control_Effectiveness" />
+          <ScalarProperty Name="Type_of_control_Preventive_Manual_Detective_Automated_Process_People" ColumnName="Type_of_control_Preventive_Manual_Detective_Automated_Process_People" />
+          <ScalarProperty Name="Control_Owner" ColumnName="Control_Owner" />
+          <ScalarProperty Name="Design_Effectiveness" ColumnName="Design_Effectiveness" />
+          <ScalarProperty Name="Control_Effectiveness" ColumnName="Control_Effectiveness" />
+          <ScalarProperty Name="Control_Description" ColumnName="Control_Description" />
+          <ScalarProperty Name="Control_Name" ColumnName="Control_Name" />
+          <ScalarProperty Name="Risk_Score" ColumnName="Risk_Score" />
+          <ScalarProperty Name="Impact" ColumnName="Impact" />
+          <ScalarProperty Name="Likelyhood" ColumnName="Likelyhood" />
+          <ScalarProperty Name="Risk_Statement" ColumnName="Risk_Statement" />
+          <ScalarProperty Name="Type_of_Risk_Financial_Non_Financial_Regulatory" ColumnName="Type_of_Risk_Financial_Non_Financial_Regulatory" />
+          <ScalarProperty Name="Risk_Description" ColumnName="Risk_Description" />
+          <ScalarProperty Name="SLA_Target" ColumnName="SLA_Target" />
+          <ScalarProperty Name="SLA_Accuracy_Timelines" ColumnName="SLA_Accuracy_Timelines" />
+          <ScalarProperty Name="Customer_End_Client_Client_Or_biz" ColumnName="Customer_End_Client_Client_Or_biz" />
+          <ScalarProperty Name="Output_what_is_the_output_storage" ColumnName="Output_what_is_the_output_storage" />
+          <ScalarProperty Name="Process_how_it_is_actually_done" ColumnName="Process_how_it_is_actually_done" />
+          <ScalarProperty Name="Input_info_needs_to_be_processed" ColumnName="Input_info_needs_to_be_processed" />
+          <ScalarProperty Name="Supplier_who_is_sending" ColumnName="Supplier_who_is_sending" />
+          <ScalarProperty Name="Activity_Description" ColumnName="Activity_Description" />
+          <ScalarProperty Name="Frequency_daily_weekly_monthly" ColumnName="Frequency_daily_weekly_monthly" />
+          <ScalarProperty Name="Applications_software" ColumnName="Applications_software" />
+          <ScalarProperty Name="Activity" ColumnName="Activity" />
+          <ScalarProperty Name="Sub_Process" ColumnName="Sub_Process" />
+          <ScalarProperty Name="Process" ColumnName="Process" />
+          <ScalarProperty Name="Account" ColumnName="Account" />
+          <ScalarProperty Name="Vertical" ColumnName="Vertical" />
+          <ScalarProperty Name="Sr_No" ColumnName="Sr_No" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AdminTables">
+      <EntityTypeMapping TypeName="RiskAppModel.AdminTable">
+        <MappingFragment StoreEntitySet="AdminTable">
+          <ScalarProperty Name="Name_Sortable" ColumnName="Name_Sortable" />
+          <ScalarProperty Name="NESSIE_ID" ColumnName="NESSIE_ID" />
+          <ScalarProperty Name="DAS_ID" ColumnName="DAS_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
