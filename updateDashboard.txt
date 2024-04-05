@@ -1,0 +1,2203 @@
+
+///admin controlleer////
+
+using RiskComplianceApp.Models;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Drawing.Printing;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+
+namespace RiskComplianceApp.Controllers
+{
+    public class AdminController : Controller
+    {
+        // GET: Admin
+        RiskAppEntities dbObj = new RiskAppEntities();
+
+        public ActionResult AdminLayout()
+        {
+
+            return View();
+
+
+        }
+        public ActionResult AdminTRR()
+        {
+            TRR obj = new TRR();
+            using (var db = new RiskAppEntities())
+            {
+                var activeRecords = dbObj.TRRs.Where(e => e.IsActive).ToList();
+                return View(activeRecords);
+            }
+
+        }
+        public ActionResult AssignTRR(int id)
+        {
+            var project = dbObj.TRRs.Find(id);
+            if (project != null)
+            {
+                project.IsActive = !project.IsActive; // Set IsActive to false
+                dbObj.SaveChanges();
+            }
+            return RedirectToAction("AdminTRR");
+        }
+
+        public ActionResult AdminNTRR()
+        {
+            NTRR obj = new NTRR();
+            using (var db = new RiskAppEntities())
+            {
+                var activeRecords = dbObj.NTRRs.Where(e => e.IsActive).ToList();
+                return View(activeRecords);
+            }
+
+        }
+        public ActionResult AssignNTRR(int id)
+        {
+            var project = dbObj.NTRRs.Find(id);
+            if (project != null)
+            {
+                project.IsActive = !project.IsActive; // Set IsActive to false
+                dbObj.SaveChanges();
+            }
+            return RedirectToAction("AdminNTRR");
+        }
+        public ActionResult AdminIBCP()
+        {
+            IBCP obj = new IBCP();
+            using (var db = new RiskAppEntities())
+            {
+                var filteredRecords = dbObj.IBCPs.Where(x => !x.IsActive).ToList();
+                return View(filteredRecords);
+            }
+
+        }
+        public ActionResult AssignIBCP(int id)
+        {
+            var project = dbObj.IBCPs.Find(id);
+            if (project != null)
+            {
+                project.IsActive = !project.IsActive; // Set IsActive to false
+                dbObj.SaveChanges();
+            }
+            return RedirectToAction("AdminIBCP");
+        }
+        public ActionResult AdminKRI()
+        {
+            KRI obj = new KRI();
+            using (var db = new RiskAppEntities())
+            {
+                var activeRecords = dbObj.KRIs.Where(e => e.IsActive).ToList();
+                return View(activeRecords);
+            }
+
+        }
+        public ActionResult AssignKRI(int id)
+        {
+            var project = dbObj.KRIs.Find(id);
+            if (project != null)
+            {
+                project.IsActive = !project.IsActive; // Set IsActive to false
+                dbObj.SaveChanges();
+            }
+            return RedirectToAction("AdminKRI");
+        }
+
+        public ActionResult ApproveIBCP(int id)
+        {
+            var record = dbObj.IBCPs.Find(id);
+            if (record != null)
+            {
+                record.Status = "Approved"; // Set Status to Approved
+                dbObj.SaveChanges();
+            }
+            return RedirectToAction("AdminIBCP");
+        }
+
+
+
+        public ActionResult SaveRemarks(int srNo, string remarks)
+        {
+            try
+            {
+                using (var db = new RiskAppEntities())
+                {
+                    var record = db.IBCPs.Find(srNo);
+                    if (record != null)
+                    {
+                        record.Remarks = remarks; // Update remarks
+                        db.SaveChanges();
+                        return Json(new { success = true });
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                // Log the exception
+            }
+            return Json(new { success = false });
+        }
+        [HttpPost]
+        public ActionResult RejectRecord(int srNo)
+        {
+            using (var db = new RiskAppEntities())
+            {
+                var record = dbObj.IBCPs.FirstOrDefault(x => x.Sr_No == srNo);
+                if (record != null)
+                {
+                    // Update the record status to 'Rejected'
+                    record.Status = "Rejected";
+                    db.Entry(record).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return Json(new { success = true });
+                }
+            }
+            return Json(new { success = false });
+        }
+
+        public ActionResult Dashboard()
+        {
+
+            using (var context = new RiskAppEntities())
+            {
+                // Assuming RiskTable is your entity representing the SQL table
+                var veryHighRiskCount = context.TRRs.Where(r => r.Residual_Risk_Considering_Control_Effectiveness == "Very High Risk").Count();
+                ViewBag.VeryHighRiskCount = veryHighRiskCount;
+
+                var LowRiskCount = context.TRRs.Where(r => r.Residual_Risk_Considering_Control_Effectiveness == "Low Risk").Count();
+                ViewBag.lowRiskCount = LowRiskCount;
+                var MediumRiskCount = context.TRRs.Where(r => r.Residual_Risk_Considering_Control_Effectiveness == "Medium Risk").Count();
+                ViewBag.mediumRiskCount = MediumRiskCount;
+                var HighRiskCount = context.TRRs.Where(r => r.Residual_Risk_Considering_Control_Effectiveness == "High Risk").Count();
+                ViewBag.highRiskCount = HighRiskCount;
+                /////////////////////table2--
+                var veryHighRiskCountTRR = context.TRRs.Where(r => r.Residual_Risk_Considering_Design_Effectiveness == "Very High Risk").Count();
+                ViewBag.VeryHighRiskCountTRR = veryHighRiskCountTRR;
+                var LowRiskCountTRR = context.TRRs.Where(r => r.Residual_Risk_Considering_Design_Effectiveness == "Low Risk").Count();
+                ViewBag.lowRiskCountTRR = LowRiskCountTRR;
+                var MediumRiskCountTRR = context.TRRs.Where(r => r.Residual_Risk_Considering_Design_Effectiveness == "Medium Risk").Count();
+                ViewBag.mediumRiskCountTRR = MediumRiskCountTRR;
+                var HighRiskCountTRR = context.TRRs.Where(r => r.Residual_Risk_Considering_Design_Effectiveness == "High Risk").Count();
+                ViewBag.highRiskCountTRR = HighRiskCountTRR;
+                ////////table3---
+                var veryHighRiskCountTRRI = context.TRRs.Where(r => r.Impact == "Very High Risk").Count();
+                ViewBag.VeryHighRiskCountTRRI = veryHighRiskCountTRRI;
+                var LowRiskCountTRRI = context.TRRs.Where(r => r.Impact == "Low Risk").Count();
+                ViewBag.lowRiskCountTRRI = LowRiskCountTRRI;
+                var MediumRiskCountTRRI = context.TRRs.Where(r => r.Impact == "Medium Risk").Count();
+                ViewBag.mediumRiskCountTRRI = MediumRiskCountTRRI;
+                var HighRiskCountTRRI = context.TRRs.Where(r => r.Impact == "High Risk").Count();
+                ViewBag.highRiskCountTRRI = HighRiskCountTRRI;
+                ////total---
+                ///
+                ViewBag.TotalRiskCount = veryHighRiskCount + LowRiskCount + MediumRiskCount + HighRiskCount;
+                ViewBag.TotalRiskCountTRR = veryHighRiskCountTRR + LowRiskCountTRR + MediumRiskCountTRR + HighRiskCountTRR;
+                ViewBag.TotalRiskCountTRRI = veryHighRiskCountTRRI + LowRiskCountTRRI + MediumRiskCountTRRI + HighRiskCountTRRI;
+
+                // Assuming RiskTable is your entity representing the SQL table
+                var veryHighRiskCountNtrr = context.NTRRs.Where(r => r.Residual_Risk_Considering_Control_Effectiveness == "Very High Risk").Count();
+                ViewBag.VeryHighRiskCountntrr = veryHighRiskCountNtrr;
+
+                var LowRiskCountNtrr = context.NTRRs.Where(r => r.Residual_Risk_Considering_Control_Effectiveness == "Low Risk").Count();
+                ViewBag.lowRiskCountNtrr = LowRiskCountNtrr;
+                var MediumRiskCountNtrr = context.NTRRs.Where(r => r.Residual_Risk_Considering_Control_Effectiveness == "Medium Risk").Count();
+                ViewBag.mediumRiskCountNtrr = MediumRiskCountNtrr;
+                var HighRiskCountNtrr = context.NTRRs.Where(r => r.Residual_Risk_Considering_Control_Effectiveness == "High Risk").Count();
+                ViewBag.highRiskCountNtrr = HighRiskCountNtrr;
+                /////////////////////table2--
+                var veryHighRiskCountNtrrr = context.NTRRs.Where(r => r.Residual_Risk_Considering_Design_Effectiveness == "Very High Risk").Count();
+                ViewBag.VeryHighRiskCountNtrrr = veryHighRiskCountNtrrr;
+                var LowRiskCountNtrrr = context.NTRRs.Where(r => r.Residual_Risk_Considering_Design_Effectiveness == "Low Risk").Count();
+                ViewBag.lowRiskCountNtrrr = LowRiskCountNtrrr;
+                var MediumRiskCountNtrrr = context.NTRRs.Where(r => r.Residual_Risk_Considering_Design_Effectiveness == "Medium Risk").Count();
+                ViewBag.mediumRiskCountNtrrr = MediumRiskCountNtrrr;
+                var HighRiskCountNtrrr = context.NTRRs.Where(r => r.Residual_Risk_Considering_Design_Effectiveness == "High Risk").Count();
+                ViewBag.highRiskCountNtrrr = HighRiskCountNtrrr;
+                ////////table3---
+                var veryHighRiskCountNtrrrr = context.NTRRs.Where(r => r.Impact == "Very High Risk").Count();
+                ViewBag.VeryHighRiskCountNtrrrr = veryHighRiskCountNtrrrr;
+                var LowRiskCountNtrrrr = context.NTRRs.Where(r => r.Impact == "Low Risk").Count();
+                ViewBag.lowRiskCountNtrrrr = LowRiskCountNtrrrr;
+                var MediumRiskCountNtrrrr = context.NTRRs.Where(r => r.Impact == "Medium Risk").Count();
+                ViewBag.mediumRiskCountTRRI = MediumRiskCountNtrrrr;
+                var HighRiskCountNtrrrr = context.NTRRs.Where(r => r.Impact == "High Risk").Count();
+                ViewBag.highRiskCountNtrrrr = HighRiskCountNtrrrr;
+                ////total---
+                ///
+                ViewBag.TotalRiskCount = veryHighRiskCountNtrr + LowRiskCountNtrr + MediumRiskCountNtrr + HighRiskCountNtrr;
+                ViewBag.TotalRiskCountTRR = veryHighRiskCountNtrrr + LowRiskCountNtrrr + MediumRiskCountNtrrr + HighRiskCountNtrrr;
+                ViewBag.TotalRiskCountTRRI = veryHighRiskCountNtrrrr + LowRiskCountNtrrrr + MediumRiskCountNtrrrr + HighRiskCountNtrrrr;
+            }
+
+            return View();
+        }
+
+
+        public ActionResult DashboardProcessAmex()
+        {
+            using (var context = new RiskAppEntities())
+            {
+                var veryHighRiskCount = context.TRRs.Where(r => r.Residual_Risk_Considering_Control_Effectiveness == "Very High Risk" && r.Account.Contains("Amex")).Count();
+                ViewBag.VeryHighRiskCount = veryHighRiskCount;
+
+                var LowRiskCount = context.TRRs.Where(r => r.Residual_Risk_Considering_Control_Effectiveness == "Low Risk" && r.Account.Contains("Amex")).Count();
+                ViewBag.lowRiskCount = LowRiskCount;
+                var MediumRiskCount = context.TRRs.Where(r => r.Residual_Risk_Considering_Control_Effectiveness == "Medium Risk" && r.Account.Contains("Amex")).Count();
+                ViewBag.mediumRiskCount = MediumRiskCount;
+                var HighRiskCount = context.TRRs.Where(r => r.Residual_Risk_Considering_Control_Effectiveness == "High Risk" && r.Account.Contains("Amex")).Count();
+                ViewBag.highRiskCount = HighRiskCount;
+                /////////////////////table2--
+                var veryHighRiskCountTRR = context.TRRs.Where(r => r.Residual_Risk_Considering_Design_Effectiveness == "Very High Risk" && r.Account.Contains("Amex")).Count();
+                ViewBag.VeryHighRiskCountTRR = veryHighRiskCountTRR;
+                var LowRiskCountTRR = context.TRRs.Where(r => r.Residual_Risk_Considering_Design_Effectiveness == "Low Risk" && r.Account.Contains("Amex")).Count();
+                ViewBag.lowRiskCountTRR = LowRiskCountTRR;
+                var MediumRiskCountTRR = context.TRRs.Where(r => r.Residual_Risk_Considering_Design_Effectiveness == "Medium Risk" && r.Account.Contains("Amex")).Count();
+                ViewBag.mediumRiskCountTRR = MediumRiskCountTRR;
+                var HighRiskCountTRR = context.TRRs.Where(r => r.Residual_Risk_Considering_Design_Effectiveness == "High Risk" && r.Account.Contains("Amex")).Count();
+                ViewBag.highRiskCountTRR = HighRiskCountTRR;
+                ////////table3---
+                var veryHighRiskCountTRRI = context.TRRs.Where(r => r.Impact == "Very High Risk" && r.Account.Contains("Amex")).Count();
+                ViewBag.VeryHighRiskCountTRRI = veryHighRiskCountTRRI;
+                var LowRiskCountTRRI = context.TRRs.Where(r => r.Impact == "Low Risk" && r.Account.Contains("Amex")).Count();
+                ViewBag.lowRiskCountTRRI = LowRiskCountTRRI;
+                var MediumRiskCountTRRI = context.TRRs.Where(r => r.Impact == "Medium Risk" && r.Account.Contains("Amex")).Count();
+                ViewBag.mediumRiskCountTRRI = MediumRiskCountTRRI;
+                var HighRiskCountTRRI = context.TRRs.Where(r => r.Impact == "High Risk" && r.Account.Contains("Amex")).Count();
+                ViewBag.highRiskCountTRRI = HighRiskCountTRRI;
+                ////total---
+                ///
+                ViewBag.TotalRiskCount = veryHighRiskCount + LowRiskCount + MediumRiskCount + HighRiskCount;
+                ViewBag.TotalRiskCountTRR = veryHighRiskCountTRR + LowRiskCountTRR + MediumRiskCountTRR + HighRiskCountTRR;
+                ViewBag.TotalRiskCountTRRI = veryHighRiskCountTRRI + LowRiskCountTRRI + MediumRiskCountTRRI + HighRiskCountTRRI;
+
+                // Assuming RiskTable is your entity representing the SQL table
+                var veryHighRiskCountNtrr = context.NTRRs.Where(r => r.Residual_Risk_Considering_Control_Effectiveness == "Very High Risk" && r.Account.Contains("Amex")).Count();
+                ViewBag.VeryHighRiskCountntrr = veryHighRiskCountNtrr;
+
+                var LowRiskCountNtrr = context.NTRRs.Where(r => r.Residual_Risk_Considering_Control_Effectiveness == "Low Risk" && r.Account.Contains("Amex")).Count();
+                ViewBag.lowRiskCountNtrr = LowRiskCountNtrr;
+                var MediumRiskCountNtrr = context.NTRRs.Where(r => r.Residual_Risk_Considering_Control_Effectiveness == "Medium Risk" && r.Account.Contains("Amex")).Count();
+                ViewBag.mediumRiskCountNtrr = MediumRiskCountNtrr;
+                var HighRiskCountNtrr = context.NTRRs.Where(r => r.Residual_Risk_Considering_Control_Effectiveness == "High Risk" && r.Account.Contains("Amex")).Count();
+                ViewBag.highRiskCountNtrr = HighRiskCountNtrr;
+                /////////////////////table2--
+                var veryHighRiskCountNtrrr = context.NTRRs.Where(r => r.Residual_Risk_Considering_Design_Effectiveness == "Very High Risk" && r.Account.Contains("Amex")).Count();
+                ViewBag.VeryHighRiskCountNtrrr = veryHighRiskCountNtrrr;
+                var LowRiskCountNtrrr = context.NTRRs.Where(r => r.Residual_Risk_Considering_Design_Effectiveness == "Low Risk" && r.Account.Contains("Amex")).Count();
+                ViewBag.lowRiskCountNtrrr = LowRiskCountNtrrr;
+                var MediumRiskCountNtrrr = context.NTRRs.Where(r => r.Residual_Risk_Considering_Design_Effectiveness == "Medium Risk" && r.Account.Contains("Amex")).Count();
+                ViewBag.mediumRiskCountNtrrr = MediumRiskCountNtrrr;
+                var HighRiskCountNtrrr = context.NTRRs.Where(r => r.Residual_Risk_Considering_Design_Effectiveness == "High Risk" && r.Account.Contains("Amex")).Count();
+                ViewBag.highRiskCountNtrrr = HighRiskCountNtrrr;
+                ////////table3---
+                var veryHighRiskCountNtrrrr = context.NTRRs.Where(r => r.Impact == "Very High Risk" && r.Account.Contains("Amex")).Count();
+                ViewBag.VeryHighRiskCountNtrrrr = veryHighRiskCountNtrrrr;
+                var LowRiskCountNtrrrr = context.NTRRs.Where(r => r.Impact == "Low Risk" && r.Account.Contains("Amex")).Count();
+                ViewBag.lowRiskCountNtrrrr = LowRiskCountNtrrrr;
+                var MediumRiskCountNtrrrr = context.NTRRs.Where(r => r.Impact == "Medium Risk" && r.Account.Contains("Amex")).Count();
+                ViewBag.mediumRiskCountTRRI = MediumRiskCountNtrrrr;
+                var HighRiskCountNtrrrr = context.NTRRs.Where(r => r.Impact == "High Risk" && r.Account.Contains("Amex")).Count();
+                ViewBag.highRiskCountNtrrrr = HighRiskCountNtrrrr;
+                ////total---
+                ///
+                ViewBag.TotalRiskCount = veryHighRiskCountNtrr + LowRiskCountNtrr + MediumRiskCountNtrr + HighRiskCountNtrr;
+                ViewBag.TotalRiskCountTRR = veryHighRiskCountNtrrr + LowRiskCountNtrrr + MediumRiskCountNtrrr + HighRiskCountNtrrr;
+                ViewBag.TotalRiskCountTRRI = veryHighRiskCountNtrrrr + LowRiskCountNtrrrr + MediumRiskCountNtrrrr + HighRiskCountNtrrrr;
+            }
+            return View();
+        }
+
+        public ActionResult DashboardProcessAegon()
+        {
+            using (var context = new RiskAppEntities())
+            {
+                var veryHighRiskCount = context.TRRs.Where(r => r.Residual_Risk_Considering_Control_Effectiveness == "Very High Risk" && r.Account.Contains("Aegon")).Count();
+                ViewBag.VeryHighRiskCount = veryHighRiskCount;
+
+                var LowRiskCount = context.TRRs.Where(r => r.Residual_Risk_Considering_Control_Effectiveness == "Low Risk" && r.Account.Contains("Aegon")).Count();
+                ViewBag.lowRiskCount = LowRiskCount;
+                var MediumRiskCount = context.TRRs.Where(r => r.Residual_Risk_Considering_Control_Effectiveness == "Medium Risk" && r.Account.Contains("Aegon")).Count();
+                ViewBag.mediumRiskCount = MediumRiskCount;
+                var HighRiskCount = context.TRRs.Where(r => r.Residual_Risk_Considering_Control_Effectiveness == "High Risk" && r.Account.Contains("Aegon")).Count();
+                ViewBag.highRiskCount = HighRiskCount;
+                /////////////////////table2--
+                var veryHighRiskCountTRR = context.TRRs.Where(r => r.Residual_Risk_Considering_Design_Effectiveness == "Very High Risk" && r.Account.Contains("Aegon")).Count();
+                ViewBag.VeryHighRiskCountTRR = veryHighRiskCountTRR;
+                var LowRiskCountTRR = context.TRRs.Where(r => r.Residual_Risk_Considering_Design_Effectiveness == "Low Risk" && r.Account.Contains("Aegon")).Count();
+                ViewBag.lowRiskCountTRR = LowRiskCountTRR;
+                var MediumRiskCountTRR = context.TRRs.Where(r => r.Residual_Risk_Considering_Design_Effectiveness == "Medium Risk" && r.Account.Contains("Aegon")).Count();
+                ViewBag.mediumRiskCountTRR = MediumRiskCountTRR;
+                var HighRiskCountTRR = context.TRRs.Where(r => r.Residual_Risk_Considering_Design_Effectiveness == "High Risk" && r.Account.Contains("Aegon")).Count();
+                ViewBag.highRiskCountTRR = HighRiskCountTRR;
+                ////////table3---
+                var veryHighRiskCountTRRI = context.TRRs.Where(r => r.Impact == "Very High Risk" && r.Account.Contains("Aegon")).Count();
+                ViewBag.VeryHighRiskCountTRRI = veryHighRiskCountTRRI;
+                var LowRiskCountTRRI = context.TRRs.Where(r => r.Impact == "Low Risk" && r.Account.Contains("Aegon")).Count();
+                ViewBag.lowRiskCountTRRI = LowRiskCountTRRI;
+                var MediumRiskCountTRRI = context.TRRs.Where(r => r.Impact == "Medium Risk" && r.Account.Contains("Aegon")).Count();
+                ViewBag.mediumRiskCountTRRI = MediumRiskCountTRRI;
+                var HighRiskCountTRRI = context.TRRs.Where(r => r.Impact == "High Risk" && r.Account.Contains("Aegon")).Count();
+                ViewBag.highRiskCountTRRI = HighRiskCountTRRI;
+                ////total---
+                ///
+                ViewBag.TotalRiskCount = veryHighRiskCount + LowRiskCount + MediumRiskCount + HighRiskCount;
+                ViewBag.TotalRiskCountTRR = veryHighRiskCountTRR + LowRiskCountTRR + MediumRiskCountTRR + HighRiskCountTRR;
+                ViewBag.TotalRiskCountTRRI = veryHighRiskCountTRRI + LowRiskCountTRRI + MediumRiskCountTRRI + HighRiskCountTRRI;
+
+                // Assuming RiskTable is your entity representing the SQL table
+                var veryHighRiskCountNtrr = context.NTRRs.Where(r => r.Residual_Risk_Considering_Control_Effectiveness == "Very High Risk" && r.Account.Contains("Aegon")).Count();
+                ViewBag.VeryHighRiskCountntrr = veryHighRiskCountNtrr;
+
+                var LowRiskCountNtrr = context.NTRRs.Where(r => r.Residual_Risk_Considering_Control_Effectiveness == "Low Risk" && r.Account.Contains("Aegon")).Count();
+                ViewBag.lowRiskCountNtrr = LowRiskCountNtrr;
+                var MediumRiskCountNtrr = context.NTRRs.Where(r => r.Residual_Risk_Considering_Control_Effectiveness == "Medium Risk" && r.Account.Contains("Aegon")).Count();
+                ViewBag.mediumRiskCountNtrr = MediumRiskCountNtrr;
+                var HighRiskCountNtrr = context.NTRRs.Where(r => r.Residual_Risk_Considering_Control_Effectiveness == "High Risk" && r.Account.Contains("Aegon")).Count();
+                ViewBag.highRiskCountNtrr = HighRiskCountNtrr;
+                /////////////////////table2--
+                var veryHighRiskCountNtrrr = context.NTRRs.Where(r => r.Residual_Risk_Considering_Design_Effectiveness == "Very High Risk" && r.Account.Contains("Aegon")).Count();
+                ViewBag.VeryHighRiskCountNtrrr = veryHighRiskCountNtrrr;
+                var LowRiskCountNtrrr = context.NTRRs.Where(r => r.Residual_Risk_Considering_Design_Effectiveness == "Low Risk" && r.Account.Contains("Aegon")).Count();
+                ViewBag.lowRiskCountNtrrr = LowRiskCountNtrrr;
+                var MediumRiskCountNtrrr = context.NTRRs.Where(r => r.Residual_Risk_Considering_Design_Effectiveness == "Medium Risk" && r.Account.Contains("Aegon")).Count();
+                ViewBag.mediumRiskCountNtrrr = MediumRiskCountNtrrr;
+                var HighRiskCountNtrrr = context.NTRRs.Where(r => r.Residual_Risk_Considering_Design_Effectiveness == "High Risk" && r.Account.Contains("Aegon")).Count();
+                ViewBag.highRiskCountNtrrr = HighRiskCountNtrrr;
+                ////////table3---
+                var veryHighRiskCountNtrrrr = context.NTRRs.Where(r => r.Impact == "Very High Risk" && r.Account.Contains("Aegon")).Count();
+                ViewBag.VeryHighRiskCountNtrrrr = veryHighRiskCountNtrrrr;
+                var LowRiskCountNtrrrr = context.NTRRs.Where(r => r.Impact == "Low Risk" && r.Account.Contains("Aegon")).Count();
+                ViewBag.lowRiskCountNtrrrr = LowRiskCountNtrrrr;
+                var MediumRiskCountNtrrrr = context.NTRRs.Where(r => r.Impact == "Medium Risk" && r.Account.Contains("Aegon")).Count();
+                ViewBag.mediumRiskCountTRRI = MediumRiskCountNtrrrr;
+                var HighRiskCountNtrrrr = context.NTRRs.Where(r => r.Impact == "High Risk" && r.Account.Contains("Aegon")).Count();
+                ViewBag.highRiskCountNtrrrr = HighRiskCountNtrrrr;
+                ////total---
+                ///
+                ViewBag.TotalRiskCount = veryHighRiskCountNtrr + LowRiskCountNtrr + MediumRiskCountNtrr + HighRiskCountNtrr;
+                ViewBag.TotalRiskCountTRR = veryHighRiskCountNtrrr + LowRiskCountNtrrr + MediumRiskCountNtrrr + HighRiskCountNtrrr;
+                ViewBag.TotalRiskCountTRRI = veryHighRiskCountNtrrrr + LowRiskCountNtrrrr + MediumRiskCountNtrrrr + HighRiskCountNtrrrr;
+
+            }
+            return View();
+        }
+        public ActionResult DashboardProcessMultiplan()
+        {
+            using (var context = new RiskAppEntities())
+            {
+                var veryHighRiskCount = context.TRRs.Where(r => r.Residual_Risk_Considering_Control_Effectiveness == "Very High Risk" && r.Account.Contains("Multiplan")).Count();
+                ViewBag.VeryHighRiskCount = veryHighRiskCount;
+
+                var LowRiskCount = context.TRRs.Where(r => r.Residual_Risk_Considering_Control_Effectiveness == "Low Risk" && r.Account.Contains("Multiplan")).Count();
+                ViewBag.lowRiskCount = LowRiskCount;
+                var MediumRiskCount = context.TRRs.Where(r => r.Residual_Risk_Considering_Control_Effectiveness == "Medium Risk" && r.Account.Contains("Multiplan")).Count();
+                ViewBag.mediumRiskCount = MediumRiskCount;
+                var HighRiskCount = context.TRRs.Where(r => r.Residual_Risk_Considering_Control_Effectiveness == "High Risk" && r.Account.Contains("Multiplan")).Count();
+                ViewBag.highRiskCount = HighRiskCount;
+                /////////////////////table2--
+                var veryHighRiskCountTRR = context.TRRs.Where(r => r.Residual_Risk_Considering_Design_Effectiveness == "Very High Risk" && r.Account.Contains("Multiplan")).Count();
+                ViewBag.VeryHighRiskCountTRR = veryHighRiskCountTRR;
+                var LowRiskCountTRR = context.TRRs.Where(r => r.Residual_Risk_Considering_Design_Effectiveness == "Low Risk" && r.Account.Contains("Multiplan")).Count();
+                ViewBag.lowRiskCountTRR = LowRiskCountTRR;
+                var MediumRiskCountTRR = context.TRRs.Where(r => r.Residual_Risk_Considering_Design_Effectiveness == "Medium Risk" && r.Account.Contains("Multiplan")).Count();
+                ViewBag.mediumRiskCountTRR = MediumRiskCountTRR;
+                var HighRiskCountTRR = context.TRRs.Where(r => r.Residual_Risk_Considering_Design_Effectiveness == "High Risk" && r.Account.Contains("Multiplan")).Count();
+                ViewBag.highRiskCountTRR = HighRiskCountTRR;
+                ////////table3---
+                var veryHighRiskCountTRRI = context.TRRs.Where(r => r.Impact == "Very High Risk" && r.Account.Contains("Multiplan")).Count();
+                ViewBag.VeryHighRiskCountTRRI = veryHighRiskCountTRRI;
+                var LowRiskCountTRRI = context.TRRs.Where(r => r.Impact == "Low Risk" && r.Account.Contains("Multiplan")).Count();
+                ViewBag.lowRiskCountTRRI = LowRiskCountTRRI;
+                var MediumRiskCountTRRI = context.TRRs.Where(r => r.Impact == "Medium Risk" && r.Account.Contains("Multiplan")).Count();
+                ViewBag.mediumRiskCountTRRI = MediumRiskCountTRRI;
+                var HighRiskCountTRRI = context.TRRs.Where(r => r.Impact == "High Risk" && r.Account.Contains("Multiplan")).Count();
+                ViewBag.highRiskCountTRRI = HighRiskCountTRRI;
+                ////total---
+                ///
+                ViewBag.TotalRiskCount = veryHighRiskCount + LowRiskCount + MediumRiskCount + HighRiskCount;
+                ViewBag.TotalRiskCountTRR = veryHighRiskCountTRR + LowRiskCountTRR + MediumRiskCountTRR + HighRiskCountTRR;
+                ViewBag.TotalRiskCountTRRI = veryHighRiskCountTRRI + LowRiskCountTRRI + MediumRiskCountTRRI + HighRiskCountTRRI;
+
+                // Assuming RiskTable is your entity representing the SQL table
+                var veryHighRiskCountNtrr = context.NTRRs.Where(r => r.Residual_Risk_Considering_Control_Effectiveness == "Very High Risk" && r.Account.Contains("Multiplan")).Count();
+                ViewBag.VeryHighRiskCountntrr = veryHighRiskCountNtrr;
+
+                var LowRiskCountNtrr = context.NTRRs.Where(r => r.Residual_Risk_Considering_Control_Effectiveness == "Low Risk" && r.Account.Contains("Multiplan")).Count();
+                ViewBag.lowRiskCountNtrr = LowRiskCountNtrr;
+                var MediumRiskCountNtrr = context.NTRRs.Where(r => r.Residual_Risk_Considering_Control_Effectiveness == "Medium Risk" && r.Account.Contains("Multiplan")).Count();
+                ViewBag.mediumRiskCountNtrr = MediumRiskCountNtrr;
+                var HighRiskCountNtrr = context.NTRRs.Where(r => r.Residual_Risk_Considering_Control_Effectiveness == "High Risk" && r.Account.Contains("Multiplan")).Count();
+                ViewBag.highRiskCountNtrr = HighRiskCountNtrr;
+                /////////////////////table2--
+                var veryHighRiskCountNtrrr = context.NTRRs.Where(r => r.Residual_Risk_Considering_Design_Effectiveness == "Very High Risk" && r.Account.Contains("Multiplan")).Count();
+                ViewBag.VeryHighRiskCountNtrrr = veryHighRiskCountNtrrr;
+                var LowRiskCountNtrrr = context.NTRRs.Where(r => r.Residual_Risk_Considering_Design_Effectiveness == "Low Risk" && r.Account.Contains("Multiplan")).Count();
+                ViewBag.lowRiskCountNtrrr = LowRiskCountNtrrr;
+                var MediumRiskCountNtrrr = context.NTRRs.Where(r => r.Residual_Risk_Considering_Design_Effectiveness == "Medium Risk" && r.Account.Contains("Multiplan")).Count();
+                ViewBag.mediumRiskCountNtrrr = MediumRiskCountNtrrr;
+                var HighRiskCountNtrrr = context.NTRRs.Where(r => r.Residual_Risk_Considering_Design_Effectiveness == "High Risk" && r.Account.Contains("Multiplan")).Count();
+                ViewBag.highRiskCountNtrrr = HighRiskCountNtrrr;
+                ////////table3---
+                var veryHighRiskCountNtrrrr = context.NTRRs.Where(r => r.Impact == "Very High Risk" && r.Account.Contains("Multiplan")).Count();
+                ViewBag.VeryHighRiskCountNtrrrr = veryHighRiskCountNtrrrr;
+                var LowRiskCountNtrrrr = context.NTRRs.Where(r => r.Impact == "Low Risk" && r.Account.Contains("Multiplan")).Count();
+                ViewBag.lowRiskCountNtrrrr = LowRiskCountNtrrrr;
+                var MediumRiskCountNtrrrr = context.NTRRs.Where(r => r.Impact == "Medium Risk" && r.Account.Contains("Multiplan")).Count();
+                ViewBag.mediumRiskCountTRRI = MediumRiskCountNtrrrr;
+                var HighRiskCountNtrrrr = context.NTRRs.Where(r => r.Impact == "High Risk" && r.Account.Contains("Multiplan")).Count();
+                ViewBag.highRiskCountNtrrrr = HighRiskCountNtrrrr;
+                ////total---
+                ///
+                ViewBag.TotalRiskCount = veryHighRiskCountNtrr + LowRiskCountNtrr + MediumRiskCountNtrr + HighRiskCountNtrr;
+                ViewBag.TotalRiskCountTRR = veryHighRiskCountNtrrr + LowRiskCountNtrrr + MediumRiskCountNtrrr + HighRiskCountNtrrr;
+                ViewBag.TotalRiskCountTRRI = veryHighRiskCountNtrrrr + LowRiskCountNtrrrr + MediumRiskCountNtrrrr + HighRiskCountNtrrrr;
+            }
+            return View();
+        }
+        public ActionResult DashboardProcessNovartis()
+        {
+            using (var context = new RiskAppEntities())
+            {
+                var veryHighRiskCount = context.TRRs.Where(r => r.Residual_Risk_Considering_Control_Effectiveness == "Very High Risk" && r.Account.Contains("Novartis")).Count();
+                ViewBag.VeryHighRiskCount = veryHighRiskCount;
+
+                var LowRiskCount = context.TRRs.Where(r => r.Residual_Risk_Considering_Control_Effectiveness == "Low Risk" && r.Account.Contains("Novartis")).Count();
+                ViewBag.lowRiskCount = LowRiskCount;
+                var MediumRiskCount = context.TRRs.Where(r => r.Residual_Risk_Considering_Control_Effectiveness == "Medium Risk" && r.Account.Contains("Novartis")).Count();
+                ViewBag.mediumRiskCount = MediumRiskCount;
+                var HighRiskCount = context.TRRs.Where(r => r.Residual_Risk_Considering_Control_Effectiveness == "High Risk" && r.Account.Contains("Novartis")).Count();
+                ViewBag.highRiskCount = HighRiskCount;
+                /////////////////////table2--
+                var veryHighRiskCountTRR = context.TRRs.Where(r => r.Residual_Risk_Considering_Design_Effectiveness == "Very High Risk" && r.Account.Contains("Novartis")).Count();
+                ViewBag.VeryHighRiskCountTRR = veryHighRiskCountTRR;
+                var LowRiskCountTRR = context.TRRs.Where(r => r.Residual_Risk_Considering_Design_Effectiveness == "Low Risk" && r.Account.Contains("Novartis")).Count();
+                ViewBag.lowRiskCountTRR = LowRiskCountTRR;
+                var MediumRiskCountTRR = context.TRRs.Where(r => r.Residual_Risk_Considering_Design_Effectiveness == "Medium Risk" && r.Account.Contains("Novartis")).Count();
+                ViewBag.mediumRiskCountTRR = MediumRiskCountTRR;
+                var HighRiskCountTRR = context.TRRs.Where(r => r.Residual_Risk_Considering_Design_Effectiveness == "High Risk" && r.Account.Contains("Novartis")).Count();
+                ViewBag.highRiskCountTRR = HighRiskCountTRR;
+                ////////table3---
+                var veryHighRiskCountTRRI = context.TRRs.Where(r => r.Impact == "Very High Risk" && r.Account.Contains("Novartis")).Count();
+                ViewBag.VeryHighRiskCountTRRI = veryHighRiskCountTRRI;
+                var LowRiskCountTRRI = context.TRRs.Where(r => r.Impact == "Low Risk" && r.Account.Contains("Novartis")).Count();
+                ViewBag.lowRiskCountTRRI = LowRiskCountTRRI;
+                var MediumRiskCountTRRI = context.TRRs.Where(r => r.Impact == "Medium Risk" && r.Account.Contains("Novartis")).Count();
+                ViewBag.mediumRiskCountTRRI = MediumRiskCountTRRI;
+                var HighRiskCountTRRI = context.TRRs.Where(r => r.Impact == "High Risk" && r.Account.Contains("Novartis")).Count();
+                ViewBag.highRiskCountTRRI = HighRiskCountTRRI;
+                ////total---
+                ///
+                ViewBag.TotalRiskCount = veryHighRiskCount + LowRiskCount + MediumRiskCount + HighRiskCount;
+                ViewBag.TotalRiskCountTRR = veryHighRiskCountTRR + LowRiskCountTRR + MediumRiskCountTRR + HighRiskCountTRR;
+                ViewBag.TotalRiskCountTRRI = veryHighRiskCountTRRI + LowRiskCountTRRI + MediumRiskCountTRRI + HighRiskCountTRRI;
+
+                // Assuming RiskTable is your entity representing the SQL table
+                var veryHighRiskCountNtrr = context.NTRRs.Where(r => r.Residual_Risk_Considering_Control_Effectiveness == "Very High Risk" && r.Account.Contains("Novartis")).Count();
+                ViewBag.VeryHighRiskCountntrr = veryHighRiskCountNtrr;
+
+                var LowRiskCountNtrr = context.NTRRs.Where(r => r.Residual_Risk_Considering_Control_Effectiveness == "Low Risk" && r.Account.Contains("Novartis")).Count();
+                ViewBag.lowRiskCountNtrr = LowRiskCountNtrr;
+                var MediumRiskCountNtrr = context.NTRRs.Where(r => r.Residual_Risk_Considering_Control_Effectiveness == "Medium Risk" && r.Account.Contains("Novartis")).Count();
+                ViewBag.mediumRiskCountNtrr = MediumRiskCountNtrr;
+                var HighRiskCountNtrr = context.NTRRs.Where(r => r.Residual_Risk_Considering_Control_Effectiveness == "High Risk" && r.Account.Contains("Novartis")).Count();
+                ViewBag.highRiskCountNtrr = HighRiskCountNtrr;
+                /////////////////////table2--
+                var veryHighRiskCountNtrrr = context.NTRRs.Where(r => r.Residual_Risk_Considering_Design_Effectiveness == "Very High Risk" && r.Account.Contains("Novartis")).Count();
+                ViewBag.VeryHighRiskCountNtrrr = veryHighRiskCountNtrrr;
+                var LowRiskCountNtrrr = context.NTRRs.Where(r => r.Residual_Risk_Considering_Design_Effectiveness == "Low Risk" && r.Account.Contains("Novartis")).Count();
+                ViewBag.lowRiskCountNtrrr = LowRiskCountNtrrr;
+                var MediumRiskCountNtrrr = context.NTRRs.Where(r => r.Residual_Risk_Considering_Design_Effectiveness == "Medium Risk" && r.Account.Contains("Novartis")).Count();
+                ViewBag.mediumRiskCountNtrrr = MediumRiskCountNtrrr;
+                var HighRiskCountNtrrr = context.NTRRs.Where(r => r.Residual_Risk_Considering_Design_Effectiveness == "High Risk" && r.Account.Contains("Novartis")).Count();
+                ViewBag.highRiskCountNtrrr = HighRiskCountNtrrr;
+                ////////table3---
+                var veryHighRiskCountNtrrrr = context.NTRRs.Where(r => r.Impact == "Very High Risk" && r.Account.Contains("Novartis")).Count();
+                ViewBag.VeryHighRiskCountNtrrrr = veryHighRiskCountNtrrrr;
+                var LowRiskCountNtrrrr = context.NTRRs.Where(r => r.Impact == "Low Risk" && r.Account.Contains("Novartis")).Count();
+                ViewBag.lowRiskCountNtrrrr = LowRiskCountNtrrrr;
+                var MediumRiskCountNtrrrr = context.NTRRs.Where(r => r.Impact == "Medium Risk" && r.Account.Contains("Novartis")).Count();
+                ViewBag.mediumRiskCountTRRI = MediumRiskCountNtrrrr;
+                var HighRiskCountNtrrrr = context.NTRRs.Where(r => r.Impact == "High Risk" && r.Account.Contains("Novartis")).Count();
+                ViewBag.highRiskCountNtrrrr = HighRiskCountNtrrrr;
+                ////total---
+                ///
+                ViewBag.TotalRiskCount = veryHighRiskCountNtrr + LowRiskCountNtrr + MediumRiskCountNtrr + HighRiskCountNtrr;
+                ViewBag.TotalRiskCountTRR = veryHighRiskCountNtrrr + LowRiskCountNtrrr + MediumRiskCountNtrrr + HighRiskCountNtrrr;
+                ViewBag.TotalRiskCountTRRI = veryHighRiskCountNtrrrr + LowRiskCountNtrrrr + MediumRiskCountNtrrrr + HighRiskCountNtrrrr;
+            }
+            return View();
+        }
+
+        public ActionResult DashboardProcessAberden()
+        {
+            using (var context = new RiskAppEntities())
+            {
+                var veryHighRiskCount = context.TRRs.Where(r => r.Residual_Risk_Considering_Control_Effectiveness == "Very High Risk" && r.Account.Contains("Aberden")).Count();
+                ViewBag.VeryHighRiskCount = veryHighRiskCount;
+
+                var LowRiskCount = context.TRRs.Where(r => r.Residual_Risk_Considering_Control_Effectiveness == "Low Risk" && r.Account.Contains("Aberden")).Count();
+                ViewBag.lowRiskCount = LowRiskCount;
+                var MediumRiskCount = context.TRRs.Where(r => r.Residual_Risk_Considering_Control_Effectiveness == "Medium Risk" && r.Account.Contains("Aberden")).Count();
+                ViewBag.mediumRiskCount = MediumRiskCount;
+                var HighRiskCount = context.TRRs.Where(r => r.Residual_Risk_Considering_Control_Effectiveness == "High Risk" && r.Account.Contains("Aberden")).Count();
+                ViewBag.highRiskCount = HighRiskCount;
+                /////////////////////table2--
+                var veryHighRiskCountTRR = context.TRRs.Where(r => r.Residual_Risk_Considering_Design_Effectiveness == "Very High Risk" && r.Account.Contains("Aberden")).Count();
+                ViewBag.VeryHighRiskCountTRR = veryHighRiskCountTRR;
+                var LowRiskCountTRR = context.TRRs.Where(r => r.Residual_Risk_Considering_Design_Effectiveness == "Low Risk" && r.Account.Contains("Aberden")).Count();
+                ViewBag.lowRiskCountTRR = LowRiskCountTRR;
+                var MediumRiskCountTRR = context.TRRs.Where(r => r.Residual_Risk_Considering_Design_Effectiveness == "Medium Risk" && r.Account.Contains("Aberden")).Count();
+                ViewBag.mediumRiskCountTRR = MediumRiskCountTRR;
+                var HighRiskCountTRR = context.TRRs.Where(r => r.Residual_Risk_Considering_Design_Effectiveness == "High Risk" && r.Account.Contains("Aberden")).Count();
+                ViewBag.highRiskCountTRR = HighRiskCountTRR;
+                ////////table3---
+                var veryHighRiskCountTRRI = context.TRRs.Where(r => r.Impact == "Very High Risk" && r.Account.Contains("Aberden")).Count();
+                ViewBag.VeryHighRiskCountTRRI = veryHighRiskCountTRRI;
+                var LowRiskCountTRRI = context.TRRs.Where(r => r.Impact == "Low Risk" && r.Account.Contains("Aberden")).Count();
+                ViewBag.lowRiskCountTRRI = LowRiskCountTRRI;
+                var MediumRiskCountTRRI = context.TRRs.Where(r => r.Impact == "Medium Risk" && r.Account.Contains("Aberden")).Count();
+                ViewBag.mediumRiskCountTRRI = MediumRiskCountTRRI;
+                var HighRiskCountTRRI = context.TRRs.Where(r => r.Impact == "High Risk" && r.Account.Contains("Aberden")).Count();
+                ViewBag.highRiskCountTRRI = HighRiskCountTRRI;
+                ////total---
+                ///
+                ViewBag.TotalRiskCount = veryHighRiskCount + LowRiskCount + MediumRiskCount + HighRiskCount;
+                ViewBag.TotalRiskCountTRR = veryHighRiskCountTRR + LowRiskCountTRR + MediumRiskCountTRR + HighRiskCountTRR;
+                ViewBag.TotalRiskCountTRRI = veryHighRiskCountTRRI + LowRiskCountTRRI + MediumRiskCountTRRI + HighRiskCountTRRI;
+
+                // Assuming RiskTable is your entity representing the SQL table
+                var veryHighRiskCountNtrr = context.NTRRs.Where(r => r.Residual_Risk_Considering_Control_Effectiveness == "Very High Risk" && r.Account.Contains("Aberden")).Count();
+                ViewBag.VeryHighRiskCountntrr = veryHighRiskCountNtrr;
+
+                var LowRiskCountNtrr = context.NTRRs.Where(r => r.Residual_Risk_Considering_Control_Effectiveness == "Low Risk" && r.Account.Contains("Aberden")).Count();
+                ViewBag.lowRiskCountNtrr = LowRiskCountNtrr;
+                var MediumRiskCountNtrr = context.NTRRs.Where(r => r.Residual_Risk_Considering_Control_Effectiveness == "Medium Risk" && r.Account.Contains("Aberden")).Count();
+                ViewBag.mediumRiskCountNtrr = MediumRiskCountNtrr;
+                var HighRiskCountNtrr = context.NTRRs.Where(r => r.Residual_Risk_Considering_Control_Effectiveness == "High Risk" && r.Account.Contains("Aberden")).Count();
+                ViewBag.highRiskCountNtrr = HighRiskCountNtrr;
+                /////////////////////table2--
+                var veryHighRiskCountNtrrr = context.NTRRs.Where(r => r.Residual_Risk_Considering_Design_Effectiveness == "Very High Risk" && r.Account.Contains("Aberden")).Count();
+                ViewBag.VeryHighRiskCountNtrrr = veryHighRiskCountNtrrr;
+                var LowRiskCountNtrrr = context.NTRRs.Where(r => r.Residual_Risk_Considering_Design_Effectiveness == "Low Risk" && r.Account.Contains("Aberden")).Count();
+                ViewBag.lowRiskCountNtrrr = LowRiskCountNtrrr;
+                var MediumRiskCountNtrrr = context.NTRRs.Where(r => r.Residual_Risk_Considering_Design_Effectiveness == "Medium Risk" && r.Account.Contains("Aberden")).Count();
+                ViewBag.mediumRiskCountNtrrr = MediumRiskCountNtrrr;
+                var HighRiskCountNtrrr = context.NTRRs.Where(r => r.Residual_Risk_Considering_Design_Effectiveness == "High Risk" && r.Account.Contains("Aberden")).Count();
+                ViewBag.highRiskCountNtrrr = HighRiskCountNtrrr;
+                ////////table3---
+                var veryHighRiskCountNtrrrr = context.NTRRs.Where(r => r.Impact == "Very High Risk" && r.Account.Contains("Aberden")).Count();
+                ViewBag.VeryHighRiskCountNtrrrr = veryHighRiskCountNtrrrr;
+                var LowRiskCountNtrrrr = context.NTRRs.Where(r => r.Impact == "Low Risk" && r.Account.Contains("Aberden")).Count();
+                ViewBag.lowRiskCountNtrrrr = LowRiskCountNtrrrr;
+                var MediumRiskCountNtrrrr = context.NTRRs.Where(r => r.Impact == "Medium Risk" && r.Account.Contains("Aberden")).Count();
+                ViewBag.mediumRiskCountTRRI = MediumRiskCountNtrrrr;
+                var HighRiskCountNtrrrr = context.NTRRs.Where(r => r.Impact == "High Risk" && r.Account.Contains("Aberden")).Count();
+                ViewBag.highRiskCountNtrrrr = HighRiskCountNtrrrr;
+                ////total---
+                ///
+                ViewBag.TotalRiskCount = veryHighRiskCountNtrr + LowRiskCountNtrr + MediumRiskCountNtrr + HighRiskCountNtrr;
+                ViewBag.TotalRiskCountTRR = veryHighRiskCountNtrrr + LowRiskCountNtrrr + MediumRiskCountNtrrr + HighRiskCountNtrrr;
+                ViewBag.TotalRiskCountTRRI = veryHighRiskCountNtrrrr + LowRiskCountNtrrrr + MediumRiskCountNtrrrr + HighRiskCountNtrrrr;
+            }
+            return View();
+        }
+        public ActionResult DashbaordIndex()
+        { 
+            return View(); 
+        }
+
+    }
+}
+
+
+//DashboardIndex.cshtml/////
+@{
+    ViewBag.Title = "DashbaordIndex";
+}
+
+
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f8f8f8;
+    }
+
+    .small {
+        margin-top: 20px;
+        text-align: center;
+        color: #333;
+    }
+
+    h1 {
+        color: #007bff;
+        margin-bottom: 10px;
+    }
+
+    .lead {
+        font-size: 18px;
+        color: #666;
+        margin-bottom: 20px;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+
+    .row {
+        margin-top: 20px;
+    }
+
+    h2 {
+        color: #333;
+    }
+
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    li {
+        margin-bottom: 10px;
+    }
+
+    .btn-default {
+        background-color: #fff;
+        color: #333;
+        border-color: #ccc;
+    }
+
+    .col-md-4 {
+        margin-bottom: 20px;
+    }
+
+    .card {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 15px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+</style>
+
+<div class="small">
+    <h1>RCSA</h1>
+    <p class="lead">Dashboard based on differnet process </p>
+    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+</div>
+
+<div class="center-block">
+    <div class="col-md-4">
+        <div class="card">
+            <h2>Transactional Risk Registar</h2>
+            <ul>
+                <li>@Html.ActionLink("AegonDashboard", "DashboardProcessAegon", "Admin")</li>
+                <li>@Html.ActionLink("AmexDashboard", "DashboardProcessAmex", "Admin")</li>
+                <li>@Html.ActionLink("AberdenDashboard", "DashboardProcessAberden", "Admin")</li>
+                <li>@Html.ActionLink("NovartisDashboard", "DashboardProcessNovartis", "Admin")</li>
+                <li>@Html.ActionLink("MultiplanDashboard", "DashboardProcessMultiplan", "Admin")</li>
+            </ul>
+        </div>
+    </div>
+    
+
+</div>
+
+//Dashboard//
+
+
+@{
+    ViewBag.Title = "Risk Dashboard";
+}
+
+
+<h2>RCSA Summary</h2>
+<h2>want to see the counts Process wise click here @Html.ActionLink("DashbaordIndex", "DashbaordIndex", "Admin")</h2>
+<h3>Transational Risk Register</h3>
+<style>
+    /* General styles */
+    body {
+        font-family: Arial, sans-serif;
+        margin: auto;
+        padding: 0;
+        background-color: #f9f9f9;
+    }
+
+    h2, h3 {
+        margin-bottom: 0px;
+        text-align: center;
+        padding: 30px;
+    }
+
+
+
+
+    /* Table styles */
+    .table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-bottom: 20px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+        .table th, .table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        .table th {
+            background-color: #f2f2f2;
+        }
+
+    /* Highlighted rows */
+    .highlight {
+        background-color: #ffcccb;
+    }
+
+    /* Container for both tables */
+    .table-container {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 20px;
+    }
+
+        /* Individual table styling */
+        .table-container .table {
+            flex-basis: 45%;
+        }
+
+    /* Responsive styling for smaller screens */
+    screen and (max-width: 768px) {
+        .table-container
+
+    {
+        flex-direction: column;
+    }
+
+    .table-container .table {
+        flex-basis: 100%;
+    }
+    }
+</style>
+
+<div style="display: flex; justify-content: space-around;">
+    <table class="table" style="flex-basis: 45%;">
+        <tr class="row header">
+            <td class="cell">Inherent Risk</td>
+            <td class="cell">Count</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Very High Risks</td>
+            <td>@ViewBag.VeryHighRiskCount</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">High Risks</td>
+            <td>@ViewBag.highRiskCount</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Medium Risks</td>
+            <td>@ViewBag.mediumRiskCount</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Low Risk</td>
+            <td>@ViewBag.lowRiskCount</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Total</td>
+            <td>@ViewBag.TotalRiskCount</td>
+        </tr>
+
+    </table>
+    <table class="table" style="flex-basis: 45%;">
+        <tr class="row header">
+            <td class="cell">Residual Risk (Control Effectiveness)</td>
+            <td class="cell">Count</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Very High Risks</td>
+            <td>@ViewBag.VeryHighRiskCountTRR</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">High Risks</td>
+            <td>@ViewBag.highRiskCountTRR</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Medium Risks</td>
+            <td>@ViewBag.mediumRiskCountTRR</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Low Risk</td>
+            <td>@ViewBag.lowRiskCountTRR</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Total</td>
+            <td>@ViewBag.TotalRiskCountTRR</td>
+        </tr>
+
+    </table>
+    <table class="table" style="flex-basis: 45%;">
+        <tr class="row header">
+            <td class="cell">Residual Risk (Design Effectiveness)</td>
+            <td class="cell">Count</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Very High Risks</td>
+            <td>@ViewBag.VeryHighRiskCountTRRI</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">High Risks</td>
+            <td>@ViewBag.highRiskCountTRRI</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Medium Risks</td>
+            <td>@ViewBag.mediumRiskCountTRRI</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Low Risk</td>
+            <td>@ViewBag.lowRiskCountTRRI</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Total</td>
+            <td>@ViewBag.TotalRiskCountTRRI</td>
+        </tr>
+
+    </table>
+</div>
+
+<h3>NOn-Transational Register</h3>
+<div style="display: flex; justify-content: space-around;">
+    <table class="table" style="flex-basis: 45%;">
+        <tr class="row header">
+            <td class="cell">Inherent Risk</td>
+            <td class="cell">Count</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Very High Risks</td>
+            <td>@ViewBag.VeryHighRiskCount</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">High Risks</td>
+            <td>@ViewBag.highRiskCount</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Medium Risks</td>
+            <td>@ViewBag.mediumRiskCount</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Low Risk</td>
+            <td>@ViewBag.lowRiskCount</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Total</td>
+            <td>@ViewBag.TotalRiskCount</td>
+        </tr>
+
+    </table>
+    <table class="table" style="flex-basis: 45%;">
+        <tr class="row header">
+            <td class="cell">Residual Risk (Control Effectiveness)</td>
+            <td class="cell">Count</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Very High Risks</td>
+            <td>@ViewBag.VeryHighRiskCountTRR</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">High Risks</td>
+            <td>@ViewBag.highRiskCountTRR</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Medium Risks</td>
+            <td>@ViewBag.mediumRiskCountTRR</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Low Risk</td>
+            <td>@ViewBag.lowRiskCountTRR</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Total</td>
+            <td>@ViewBag.TotalRiskCountTRR</td>
+        </tr>
+
+    </table>
+    <table class="table" style="flex-basis: 45%;">
+        <tr class="row header">
+            <td class="cell">Residual Risk (Design Effectiveness)</td>
+            <td class="cell">Count</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Very High Risks</td>
+            <td>@ViewBag.VeryHighRiskCountTRRI</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">High Risks</td>
+            <td>@ViewBag.highRiskCountTRRI</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Medium Risks</td>
+            <td>@ViewBag.mediumRiskCountTRRI</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Low Risk</td>
+            <td>@ViewBag.lowRiskCountTRRI</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Total</td>
+            <td>@ViewBag.TotalRiskCountTRRI</td>
+        </tr>
+
+    </table>
+</div>
+
+
+//DashboardProcessAberden//
+
+
+@{
+    ViewBag.Title = "Risk Dashboard";
+}
+
+
+<h2>RCSA Summary</h2>
+
+<h3>Transational Risk Register---Aberden</h3>
+<style>
+    /* General styles */
+    body {
+        font-family: Arial, sans-serif;
+        margin: auto;
+        padding: 0;
+        background-color: #f9f9f9;
+    }
+
+    h2, h3 {
+        margin-bottom: 0px;
+        text-align: center;
+        padding: 30px;
+    }
+
+
+
+
+    /* Table styles */
+    .table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-bottom: 20px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+        .table th, .table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        .table th {
+            background-color: #f2f2f2;
+        }
+
+    /* Highlighted rows */
+    .highlight {
+        background-color: #ffcccb;
+    }
+
+    /* Container for both tables */
+    .table-container {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 20px;
+    }
+
+        /* Individual table styling */
+        .table-container .table {
+            flex-basis: 45%;
+        }
+
+    /* Responsive styling for smaller screens */
+    screen and (max-width: 768px) {
+        .table-container
+
+    {
+        flex-direction: column;
+    }
+
+    .table-container .table {
+        flex-basis: 100%;
+    }
+    }
+</style>
+
+<div style="display: flex; justify-content: space-around;">
+    <table class="table" style="flex-basis: 45%;">
+        <tr class="row header">
+            <td class="cell">Inherent Risk</td>
+            <td class="cell">Count</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Very High Risks</td>
+            <td>@ViewBag.VeryHighRiskCount</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">High Risks</td>
+            <td>@ViewBag.highRiskCount</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Medium Risks</td>
+            <td>@ViewBag.mediumRiskCount</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Low Risk</td>
+            <td>@ViewBag.lowRiskCount</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Total</td>
+            <td>@ViewBag.TotalRiskCount</td>
+        </tr>
+
+    </table>
+    <table class="table" style="flex-basis: 45%;">
+        <tr class="row header">
+            <td class="cell">Residual Risk (Control Effectiveness)</td>
+            <td class="cell">Count</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Very High Risks</td>
+            <td>@ViewBag.VeryHighRiskCountTRR</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">High Risks</td>
+            <td>@ViewBag.highRiskCountTRR</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Medium Risks</td>
+            <td>@ViewBag.mediumRiskCountTRR</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Low Risk</td>
+            <td>@ViewBag.lowRiskCountTRR</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Total</td>
+            <td>@ViewBag.TotalRiskCountTRR</td>
+        </tr>
+
+    </table>
+    <table class="table" style="flex-basis: 45%;">
+        <tr class="row header">
+            <td class="cell">Residual Risk (Design Effectiveness)</td>
+            <td class="cell">Count</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Very High Risks</td>
+            <td>@ViewBag.VeryHighRiskCountTRRI</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">High Risks</td>
+            <td>@ViewBag.highRiskCountTRRI</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Medium Risks</td>
+            <td>@ViewBag.mediumRiskCountTRRI</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Low Risk</td>
+            <td>@ViewBag.lowRiskCountTRRI</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Total</td>
+            <td>@ViewBag.TotalRiskCountTRRI</td>
+        </tr>
+
+    </table>
+</div>
+
+<h3>NOn-Transational Register</h3>
+<div style="display: flex; justify-content: space-around;">
+    <table class="table" style="flex-basis: 45%;">
+        <tr class="row header">
+            <td class="cell">Inherent Risk</td>
+            <td class="cell">Count</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Very High Risks</td>
+            <td>@ViewBag.VeryHighRiskCount</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">High Risks</td>
+            <td>@ViewBag.highRiskCount</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Medium Risks</td>
+            <td>@ViewBag.mediumRiskCount</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Low Risk</td>
+            <td>@ViewBag.lowRiskCount</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Total</td>
+            <td>@ViewBag.TotalRiskCount</td>
+        </tr>
+
+    </table>
+    <table class="table" style="flex-basis: 45%;">
+        <tr class="row header">
+            <td class="cell">Residual Risk (Control Effectiveness)</td>
+            <td class="cell">Count</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Very High Risks</td>
+            <td>@ViewBag.VeryHighRiskCountTRR</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">High Risks</td>
+            <td>@ViewBag.highRiskCountTRR</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Medium Risks</td>
+            <td>@ViewBag.mediumRiskCountTRR</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Low Risk</td>
+            <td>@ViewBag.lowRiskCountTRR</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Total</td>
+            <td>@ViewBag.TotalRiskCountTRR</td>
+        </tr>
+
+    </table>
+    <table class="table" style="flex-basis: 45%;">
+        <tr class="row header">
+            <td class="cell">Residual Risk (Design Effectiveness)</td>
+            <td class="cell">Count</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Very High Risks</td>
+            <td>@ViewBag.VeryHighRiskCountTRRI</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">High Risks</td>
+            <td>@ViewBag.highRiskCountTRRI</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Medium Risks</td>
+            <td>@ViewBag.mediumRiskCountTRRI</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Low Risk</td>
+            <td>@ViewBag.lowRiskCountTRRI</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Total</td>
+            <td>@ViewBag.TotalRiskCountTRRI</td>
+        </tr>
+
+    </table>
+</div>
+
+
+//DashboardProcessAegon//
+
+@{
+    ViewBag.Title = "Risk Dashboard";
+}
+
+
+<h2>RCSA Summary</h2>
+
+<h3>Transational Risk Register---Aegon</h3>
+<style>
+    /* General styles */
+    body {
+        font-family: Arial, sans-serif;
+        margin: auto;
+        padding: 0;
+        background-color: #f9f9f9;
+    }
+
+    h2, h3 {
+        margin-bottom: 0px;
+        text-align: center;
+        padding: 30px;
+    }
+
+
+
+
+    /* Table styles */
+    .table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-bottom: 20px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+        .table th, .table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        .table th {
+            background-color: #f2f2f2;
+        }
+
+    /* Highlighted rows */
+    .highlight {
+        background-color: #ffcccb;
+    }
+
+    /* Container for both tables */
+    .table-container {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 20px;
+    }
+
+        /* Individual table styling */
+        .table-container .table {
+            flex-basis: 45%;
+        }
+
+    /* Responsive styling for smaller screens */
+    screen and (max-width: 768px) {
+        .table-container
+
+    {
+        flex-direction: column;
+    }
+
+    .table-container .table {
+        flex-basis: 100%;
+    }
+    }
+</style>
+
+<div style="display: flex; justify-content: space-around;">
+    <table class="table" style="flex-basis: 45%;">
+        <tr class="row header">
+            <td class="cell">Inherent Risk</td>
+            <td class="cell">Count</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Very High Risks</td>
+            <td>@ViewBag.VeryHighRiskCount</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">High Risks</td>
+            <td>@ViewBag.highRiskCount</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Medium Risks</td>
+            <td>@ViewBag.mediumRiskCount</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Low Risk</td>
+            <td>@ViewBag.lowRiskCount</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Total</td>
+            <td>@ViewBag.TotalRiskCount</td>
+        </tr>
+
+    </table>
+    <table class="table" style="flex-basis: 45%;">
+        <tr class="row header">
+            <td class="cell">Residual Risk (Control Effectiveness)</td>
+            <td class="cell">Count</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Very High Risks</td>
+            <td>@ViewBag.VeryHighRiskCountTRR</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">High Risks</td>
+            <td>@ViewBag.highRiskCountTRR</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Medium Risks</td>
+            <td>@ViewBag.mediumRiskCountTRR</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Low Risk</td>
+            <td>@ViewBag.lowRiskCountTRR</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Total</td>
+            <td>@ViewBag.TotalRiskCountTRR</td>
+        </tr>
+
+    </table>
+    <table class="table" style="flex-basis: 45%;">
+        <tr class="row header">
+            <td class="cell">Residual Risk (Design Effectiveness)</td>
+            <td class="cell">Count</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Very High Risks</td>
+            <td>@ViewBag.VeryHighRiskCountTRRI</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">High Risks</td>
+            <td>@ViewBag.highRiskCountTRRI</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Medium Risks</td>
+            <td>@ViewBag.mediumRiskCountTRRI</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Low Risk</td>
+            <td>@ViewBag.lowRiskCountTRRI</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Total</td>
+            <td>@ViewBag.TotalRiskCountTRRI</td>
+        </tr>
+
+    </table>
+</div>
+
+<h3>NOn-Transational Register</h3>
+<div style="display: flex; justify-content: space-around;">
+    <table class="table" style="flex-basis: 45%;">
+        <tr class="row header">
+            <td class="cell">Inherent Risk</td>
+            <td class="cell">Count</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Very High Risks</td>
+            <td>@ViewBag.VeryHighRiskCount</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">High Risks</td>
+            <td>@ViewBag.highRiskCount</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Medium Risks</td>
+            <td>@ViewBag.mediumRiskCount</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Low Risk</td>
+            <td>@ViewBag.lowRiskCount</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Total</td>
+            <td>@ViewBag.TotalRiskCount</td>
+        </tr>
+
+    </table>
+    <table class="table" style="flex-basis: 45%;">
+        <tr class="row header">
+            <td class="cell">Residual Risk (Control Effectiveness)</td>
+            <td class="cell">Count</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Very High Risks</td>
+            <td>@ViewBag.VeryHighRiskCountTRR</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">High Risks</td>
+            <td>@ViewBag.highRiskCountTRR</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Medium Risks</td>
+            <td>@ViewBag.mediumRiskCountTRR</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Low Risk</td>
+            <td>@ViewBag.lowRiskCountTRR</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Total</td>
+            <td>@ViewBag.TotalRiskCountTRR</td>
+        </tr>
+
+    </table>
+    <table class="table" style="flex-basis: 45%;">
+        <tr class="row header">
+            <td class="cell">Residual Risk (Design Effectiveness)</td>
+            <td class="cell">Count</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Very High Risks</td>
+            <td>@ViewBag.VeryHighRiskCountTRRI</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">High Risks</td>
+            <td>@ViewBag.highRiskCountTRRI</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Medium Risks</td>
+            <td>@ViewBag.mediumRiskCountTRRI</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Low Risk</td>
+            <td>@ViewBag.lowRiskCountTRRI</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Total</td>
+            <td>@ViewBag.TotalRiskCountTRRI</td>
+        </tr>
+
+    </table>
+</div>
+
+
+
+//DashboardProcessAmex//
+
+@{
+    ViewBag.Title = "Risk Dashboard";
+}
+
+
+<h2>RCSA Summary</h2>
+
+<h3>Transational Risk Register---Amex</h3>
+<style>
+    /* General styles */
+    body {
+        font-family: Arial, sans-serif;
+        margin: auto;
+        padding: 0;
+        background-color: #f9f9f9;
+    }
+
+    h2, h3 {
+        margin-bottom: 0px;
+        text-align: center;
+        padding: 30px;
+    }
+
+
+
+
+    /* Table styles */
+    .table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-bottom: 20px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+        .table th, .table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        .table th {
+            background-color: #f2f2f2;
+        }
+
+    /* Highlighted rows */
+    .highlight {
+        background-color: #ffcccb;
+    }
+
+    /* Container for both tables */
+    .table-container {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 20px;
+    }
+
+        /* Individual table styling */
+        .table-container .table {
+            flex-basis: 45%;
+        }
+
+    /* Responsive styling for smaller screens */
+    screen and (max-width: 768px) {
+        .table-container
+
+    {
+        flex-direction: column;
+    }
+
+    .table-container .table {
+        flex-basis: 100%;
+    }
+    }
+</style>
+
+<div style="display: flex; justify-content: space-around;">
+    <table class="table" style="flex-basis: 45%;">
+        <tr class="row header">
+            <td class="cell">Inherent Risk</td>
+            <td class="cell">Count</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Very High Risks</td>
+            <td>@ViewBag.VeryHighRiskCount</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">High Risks</td>
+            <td>@ViewBag.highRiskCount</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Medium Risks</td>
+            <td>@ViewBag.mediumRiskCount</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Low Risk</td>
+            <td>@ViewBag.lowRiskCount</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Total</td>
+            <td>@ViewBag.TotalRiskCount</td>
+        </tr>
+
+    </table>
+    <table class="table" style="flex-basis: 45%;">
+        <tr class="row header">
+            <td class="cell">Residual Risk (Control Effectiveness)</td>
+            <td class="cell">Count</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Very High Risks</td>
+            <td>@ViewBag.VeryHighRiskCountTRR</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">High Risks</td>
+            <td>@ViewBag.highRiskCountTRR</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Medium Risks</td>
+            <td>@ViewBag.mediumRiskCountTRR</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Low Risk</td>
+            <td>@ViewBag.lowRiskCountTRR</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Total</td>
+            <td>@ViewBag.TotalRiskCountTRR</td>
+        </tr>
+
+    </table>
+    <table class="table" style="flex-basis: 45%;">
+        <tr class="row header">
+            <td class="cell">Residual Risk (Design Effectiveness)</td>
+            <td class="cell">Count</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Very High Risks</td>
+            <td>@ViewBag.VeryHighRiskCountTRRI</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">High Risks</td>
+            <td>@ViewBag.highRiskCountTRRI</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Medium Risks</td>
+            <td>@ViewBag.mediumRiskCountTRRI</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Low Risk</td>
+            <td>@ViewBag.lowRiskCountTRRI</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Total</td>
+            <td>@ViewBag.TotalRiskCountTRRI</td>
+        </tr>
+
+    </table>
+</div>
+
+<h3>NOn-Transational Register</h3>
+<div style="display: flex; justify-content: space-around;">
+    <table class="table" style="flex-basis: 45%;">
+        <tr class="row header">
+            <td class="cell">Inherent Risk</td>
+            <td class="cell">Count</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Very High Risks</td>
+            <td>@ViewBag.VeryHighRiskCount</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">High Risks</td>
+            <td>@ViewBag.highRiskCount</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Medium Risks</td>
+            <td>@ViewBag.mediumRiskCount</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Low Risk</td>
+            <td>@ViewBag.lowRiskCount</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Total</td>
+            <td>@ViewBag.TotalRiskCount</td>
+        </tr>
+
+    </table>
+    <table class="table" style="flex-basis: 45%;">
+        <tr class="row header">
+            <td class="cell">Residual Risk (Control Effectiveness)</td>
+            <td class="cell">Count</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Very High Risks</td>
+            <td>@ViewBag.VeryHighRiskCountTRR</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">High Risks</td>
+            <td>@ViewBag.highRiskCountTRR</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Medium Risks</td>
+            <td>@ViewBag.mediumRiskCountTRR</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Low Risk</td>
+            <td>@ViewBag.lowRiskCountTRR</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Total</td>
+            <td>@ViewBag.TotalRiskCountTRR</td>
+        </tr>
+
+    </table>
+    <table class="table" style="flex-basis: 45%;">
+        <tr class="row header">
+            <td class="cell">Residual Risk (Design Effectiveness)</td>
+            <td class="cell">Count</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Very High Risks</td>
+            <td>@ViewBag.VeryHighRiskCountTRRI</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">High Risks</td>
+            <td>@ViewBag.highRiskCountTRRI</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Medium Risks</td>
+            <td>@ViewBag.mediumRiskCountTRRI</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Low Risk</td>
+            <td>@ViewBag.lowRiskCountTRRI</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Total</td>
+            <td>@ViewBag.TotalRiskCountTRRI</td>
+        </tr>
+
+    </table>
+</div>
+
+
+
+
+//DashboardProcessMultiplan//
+
+
+@{
+    ViewBag.Title = "Risk Dashboard";
+}
+
+
+<h2>RCSA Summary</h2>
+
+<h3>Transational Risk Register---Multiplan</h3>
+<style>
+    /* General styles */
+    body {
+        font-family: Arial, sans-serif;
+        margin: auto;
+        padding: 0;
+        background-color: #f9f9f9;
+    }
+
+    h2, h3 {
+        margin-bottom: 0px;
+        text-align: center;
+        padding: 30px;
+    }
+
+
+
+
+    /* Table styles */
+    .table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-bottom: 20px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+        .table th, .table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        .table th {
+            background-color: #f2f2f2;
+        }
+
+    /* Highlighted rows */
+    .highlight {
+        background-color: #ffcccb;
+    }
+
+    /* Container for both tables */
+    .table-container {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 20px;
+    }
+
+        /* Individual table styling */
+        .table-container .table {
+            flex-basis: 45%;
+        }
+
+    /* Responsive styling for smaller screens */
+    screen and (max-width: 768px) {
+        .table-container
+
+    {
+        flex-direction: column;
+    }
+
+    .table-container .table {
+        flex-basis: 100%;
+    }
+    }
+</style>
+
+<div style="display: flex; justify-content: space-around;">
+    <table class="table" style="flex-basis: 45%;">
+        <tr class="row header">
+            <td class="cell">Inherent Risk</td>
+            <td class="cell">Count</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Very High Risks</td>
+            <td>@ViewBag.VeryHighRiskCount</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">High Risks</td>
+            <td>@ViewBag.highRiskCount</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Medium Risks</td>
+            <td>@ViewBag.mediumRiskCount</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Low Risk</td>
+            <td>@ViewBag.lowRiskCount</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Total</td>
+            <td>@ViewBag.TotalRiskCount</td>
+        </tr>
+
+    </table>
+    <table class="table" style="flex-basis: 45%;">
+        <tr class="row header">
+            <td class="cell">Residual Risk (Control Effectiveness)</td>
+            <td class="cell">Count</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Very High Risks</td>
+            <td>@ViewBag.VeryHighRiskCountTRR</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">High Risks</td>
+            <td>@ViewBag.highRiskCountTRR</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Medium Risks</td>
+            <td>@ViewBag.mediumRiskCountTRR</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Low Risk</td>
+            <td>@ViewBag.lowRiskCountTRR</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Total</td>
+            <td>@ViewBag.TotalRiskCountTRR</td>
+        </tr>
+
+    </table>
+    <table class="table" style="flex-basis: 45%;">
+        <tr class="row header">
+            <td class="cell">Residual Risk (Design Effectiveness)</td>
+            <td class="cell">Count</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Very High Risks</td>
+            <td>@ViewBag.VeryHighRiskCountTRRI</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">High Risks</td>
+            <td>@ViewBag.highRiskCountTRRI</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Medium Risks</td>
+            <td>@ViewBag.mediumRiskCountTRRI</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Low Risk</td>
+            <td>@ViewBag.lowRiskCountTRRI</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Total</td>
+            <td>@ViewBag.TotalRiskCountTRRI</td>
+        </tr>
+
+    </table>
+</div>
+
+<h3>NOn-Transational Register</h3>
+<div style="display: flex; justify-content: space-around;">
+    <table class="table" style="flex-basis: 45%;">
+        <tr class="row header">
+            <td class="cell">Inherent Risk</td>
+            <td class="cell">Count</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Very High Risks</td>
+            <td>@ViewBag.VeryHighRiskCount</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">High Risks</td>
+            <td>@ViewBag.highRiskCount</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Medium Risks</td>
+            <td>@ViewBag.mediumRiskCount</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Low Risk</td>
+            <td>@ViewBag.lowRiskCount</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Total</td>
+            <td>@ViewBag.TotalRiskCount</td>
+        </tr>
+
+    </table>
+    <table class="table" style="flex-basis: 45%;">
+        <tr class="row header">
+            <td class="cell">Residual Risk (Control Effectiveness)</td>
+            <td class="cell">Count</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Very High Risks</td>
+            <td>@ViewBag.VeryHighRiskCountTRR</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">High Risks</td>
+            <td>@ViewBag.highRiskCountTRR</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Medium Risks</td>
+            <td>@ViewBag.mediumRiskCountTRR</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Low Risk</td>
+            <td>@ViewBag.lowRiskCountTRR</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Total</td>
+            <td>@ViewBag.TotalRiskCountTRR</td>
+        </tr>
+
+    </table>
+    <table class="table" style="flex-basis: 45%;">
+        <tr class="row header">
+            <td class="cell">Residual Risk (Design Effectiveness)</td>
+            <td class="cell">Count</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Very High Risks</td>
+            <td>@ViewBag.VeryHighRiskCountTRRI</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">High Risks</td>
+            <td>@ViewBag.highRiskCountTRRI</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Medium Risks</td>
+            <td>@ViewBag.mediumRiskCountTRRI</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Low Risk</td>
+            <td>@ViewBag.lowRiskCountTRRI</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Total</td>
+            <td>@ViewBag.TotalRiskCountTRRI</td>
+        </tr>
+
+    </table>
+</div>
+
+
+
+//DashboardProcessNovartis//
+
+@{
+    ViewBag.Title = "Risk Dashboard";
+}
+
+
+<h2>RCSA Summary</h2>
+
+<h3>Transational Risk Register---Novartis</h3>
+<style>
+    /* General styles */
+    body {
+        font-family: Arial, sans-serif;
+        margin: auto;
+        padding: 0;
+        background-color: #f9f9f9;
+    }
+
+    h2, h3 {
+        margin-bottom: 0px;
+        text-align: center;
+        padding: 30px;
+    }
+
+
+
+
+    /* Table styles */
+    .table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-bottom: 20px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+        .table th, .table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        .table th {
+            background-color: #f2f2f2;
+        }
+
+    /* Highlighted rows */
+    .highlight {
+        background-color: #ffcccb;
+    }
+
+    /* Container for both tables */
+    .table-container {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 20px;
+    }
+
+        /* Individual table styling */
+        .table-container .table {
+            flex-basis: 45%;
+        }
+
+    /* Responsive styling for smaller screens */
+    screen and (max-width: 768px) {
+        .table-container
+
+    {
+        flex-direction: column;
+    }
+
+    .table-container .table {
+        flex-basis: 100%;
+    }
+    }
+</style>
+
+<div style="display: flex; justify-content: space-around;">
+    <table class="table" style="flex-basis: 45%;">
+        <tr class="row header">
+            <td class="cell">Inherent Risk</td>
+            <td class="cell">Count</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Very High Risks</td>
+            <td>@ViewBag.VeryHighRiskCount</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">High Risks</td>
+            <td>@ViewBag.highRiskCount</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Medium Risks</td>
+            <td>@ViewBag.mediumRiskCount</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Low Risk</td>
+            <td>@ViewBag.lowRiskCount</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Total</td>
+            <td>@ViewBag.TotalRiskCount</td>
+        </tr>
+
+    </table>
+    <table class="table" style="flex-basis: 45%;">
+        <tr class="row header">
+            <td class="cell">Residual Risk (Control Effectiveness)</td>
+            <td class="cell">Count</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Very High Risks</td>
+            <td>@ViewBag.VeryHighRiskCountTRR</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">High Risks</td>
+            <td>@ViewBag.highRiskCountTRR</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Medium Risks</td>
+            <td>@ViewBag.mediumRiskCountTRR</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Low Risk</td>
+            <td>@ViewBag.lowRiskCountTRR</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Total</td>
+            <td>@ViewBag.TotalRiskCountTRR</td>
+        </tr>
+
+    </table>
+    <table class="table" style="flex-basis: 45%;">
+        <tr class="row header">
+            <td class="cell">Residual Risk (Design Effectiveness)</td>
+            <td class="cell">Count</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Very High Risks</td>
+            <td>@ViewBag.VeryHighRiskCountTRRI</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">High Risks</td>
+            <td>@ViewBag.highRiskCountTRRI</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Medium Risks</td>
+            <td>@ViewBag.mediumRiskCountTRRI</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Low Risk</td>
+            <td>@ViewBag.lowRiskCountTRRI</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Total</td>
+            <td>@ViewBag.TotalRiskCountTRRI</td>
+        </tr>
+
+    </table>
+</div>
+
+<h3>NOn-Transational Register</h3>
+<div style="display: flex; justify-content: space-around;">
+    <table class="table" style="flex-basis: 45%;">
+        <tr class="row header">
+            <td class="cell">Inherent Risk</td>
+            <td class="cell">Count</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Very High Risks</td>
+            <td>@ViewBag.VeryHighRiskCount</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">High Risks</td>
+            <td>@ViewBag.highRiskCount</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Medium Risks</td>
+            <td>@ViewBag.mediumRiskCount</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Low Risk</td>
+            <td>@ViewBag.lowRiskCount</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Total</td>
+            <td>@ViewBag.TotalRiskCount</td>
+        </tr>
+
+    </table>
+    <table class="table" style="flex-basis: 45%;">
+        <tr class="row header">
+            <td class="cell">Residual Risk (Control Effectiveness)</td>
+            <td class="cell">Count</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Very High Risks</td>
+            <td>@ViewBag.VeryHighRiskCountTRR</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">High Risks</td>
+            <td>@ViewBag.highRiskCountTRR</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Medium Risks</td>
+            <td>@ViewBag.mediumRiskCountTRR</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Low Risk</td>
+            <td>@ViewBag.lowRiskCountTRR</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Total</td>
+            <td>@ViewBag.TotalRiskCountTRR</td>
+        </tr>
+
+    </table>
+    <table class="table" style="flex-basis: 45%;">
+        <tr class="row header">
+            <td class="cell">Residual Risk (Design Effectiveness)</td>
+            <td class="cell">Count</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Very High Risks</td>
+            <td>@ViewBag.VeryHighRiskCountTRRI</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">High Risks</td>
+            <td>@ViewBag.highRiskCountTRRI</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Medium Risks</td>
+            <td>@ViewBag.mediumRiskCountTRRI</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Low Risk</td>
+            <td>@ViewBag.lowRiskCountTRRI</td>
+        </tr>
+        <tr class="row">
+            <td class="cell">Total</td>
+            <td>@ViewBag.TotalRiskCountTRRI</td>
+        </tr>
+
+    </table>
+</div>
+
+
